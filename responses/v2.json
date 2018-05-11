@@ -1,0 +1,284 @@
+{
+  "blog": {
+    "ask": false,
+    "ask_anon": false,
+    "ask_page_title": "Ask me anything",
+    "can_subscribe": false,
+    "description": "<p>koto hajime</p>",
+    "is_adult": false,
+    "is_nsfw": false,
+    "name": "kthjm",
+    "posts": 106159,
+    "reply_conditions": "3",
+    "share_likes": false,
+    "subscribed": false,
+    "title": "(course of the) function.",
+    "total_posts": 106159,
+    "updated": 1526061534,
+    "url": "http://kthjm.tumblr.com/",
+    "is_optout_ads": false
+  },
+  "post": {
+    "quote": {
+      "text": "機械学習のセミナーに高い受講料を払って参加したのに、大学の教養程度の数学を教わってる時間が9割以上を占めているだとか、最近よく目にする光景なので、他人事でもあるまい。我々は過去にサボってきた負債を死ぬまでかけて払い続けなければならない宿命にあるのだ。※個人の感想です。",
+      "source": "<a href=\"https://twitter.com/yaneuraou/status/988379063302549504?s=20\" target=\"_blank\">https://twitter.com/yaneuraou/status/988379063302549504?s=20</a>"
+    },
+    "text": {
+      "title": null,
+      "body": "<p><a href=\"http://gkojax.tumblr.com/post/173801755675\" class=\"tumblr_blog\" target=\"_blank\">gkojax</a>:</p>\n\n<blockquote><blockquote>“上京する前に友人と『スタートアップ起業家には気をつけような…』と密かに誓った記憶がある。まあモテる。会社が儲かってるとかルックスとかあんま関係ない。目標に向かってストイックに情熱を燃やしてる、地元ではみたことないような生命力溢れる姿に、なんやかんや惹かれてしまう生き物なのよねー”</blockquote> <p>— <a href=\"https://twitter.com/TanakaRei_vd/status/994495893834317825\" target=\"_blank\">田中 伶さんのツイート</a></p></blockquote>"
+    },
+    "chat": {
+      "source_url": "https://soufflehour.tumblr.com/post/171171648503/person-a-when-i-woke-up-this-morning-i",
+      "source_title": "soufflehour",
+      "title": null,
+      "body": "Person A: When I woke up this morning, I meditated, did 50 pushups, drank green tea and went for a 30minute walk.\nPerson B: When I woke up, I spent an hour just waking up.\n\n\n\n",
+      "dialogue": [
+        {
+          "name": "Person A",
+          "label": "Person A:",
+          "phrase": "When I woke up this morning, I meditated, did 50 pushups, drank green tea and went for a 30minute walk."
+        },
+        {
+          "name": "Person B",
+          "label": "Person B:",
+          "phrase": "When I woke up, I spent an hour just waking up."
+        }
+      ]
+    },
+    "photo": {
+      "caption": "",
+      "image_permalink": "http://kthjm.tumblr.com/image/173799975082",
+      "photos": [
+        {
+          "caption": "",
+          "original_size": {
+            "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_1280.jpg",
+            "width": 540,
+            "height": 960
+          },
+          "alt_sizes": [
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_1280.jpg",
+              "width": 540,
+              "height": 960
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_540.jpg",
+              "width": 456,
+              "height": 810
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_500.jpg",
+              "width": 422,
+              "height": 750
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_400.jpg",
+              "width": 338,
+              "height": 600
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_250.jpg",
+              "width": 225,
+              "height": 400
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_100.jpg",
+              "width": 100,
+              "height": 178
+            },
+            {
+              "url": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_75sq.jpg",
+              "width": 75,
+              "height": 75
+            }
+          ]
+        }
+      ]
+    },
+    "link": {
+      "source_url": "https://t.umblr.com/redirect?z=https%3A%2F%2Fqiita.com%2FKos-Ne%2Fitems%2F5ac5577ecc21326a58c7&t=OTM3MjYxNDQ2MmI4ZTA5NzE4MWU1OTVlNzdlOWQ0ODQyZDlkZTJkYSwxNzIyODY3ODE3NDI%3D&b=t%3Aw_VZG2FirpzSDqHW4YQ79g&p=http%3A%2F%2Fkthjm.tumblr.com%2Fpost%2F172286781742%2Fmac%E3%81%ABegpu%E3%82%92%E7%B9%8B%E3%81%84%E3%81%A7tensorflowgpu%E7%89%88%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99-qiita&m=1",
+      "source_title": "qiita.com",
+      "title": "macにeGPUを繋いでTensorflow(GPU版)を動かす - Qiita",
+      "url": "https://qiita.com/Kos-Ne/items/5ac5577ecc21326a58c7",
+      "link_author": null,
+      "excerpt": "macにNVIDIA製GPUをeGPUとして繋いでTensorflowを動かすことができました．\n研究室でmacを買い替えたのでPython環境構築からまとめておきます． #環境\n- iMac 2017(macOS Sierra 1...",
+      "publisher": "qiita.com",
+      "description": "<p><a href=\"http://toukubo.com/post/172285931146/mac%E3%81%ABegpu%E3%82%92%E7%B9%8B%E3%81%84%E3%81%A7tensorflowgpu%E7%89%88%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99-qiita\" class=\"tumblr_blog\" target=\"_blank\">toukubo</a>:</p>\n\n<blockquote><p>この流れは来ますね。GPUよくわかってないひとも知っといたほうが良い</p><p>・人工知能の巨大ムーブメント需要でGPU産業は盛り上がりまくっている。このスケールメリットがのっかって安価化が始まるだろう。<br/><br/>・イラレとかでっかいモニターとかブラウザとかOS描画とか、GPUを使う処理というが現在は重くなってきてる。iosとかのデバイスとくらべていまパソコンが大きく差をつけているのは主にGPU。</p><p>・macbook proとかが高いのってGPUをモバイルで早くするのが高いからってところがかなりある。そしてこいつらは外付けモニターとか重い処理するときように「二枚のGPU用カードを搭載している」のであった。消費電力が巨大ってのもあって普段はこの「いいほうのGPUは死んでる」のだった。無駄だよね。</p><p>・macbook の一番安いやつ（あるいは２００８年とかのmacbook air）に外付けGPU付けたほうが、最新のマックブックプロ25万より遥かにサクサクになる。</p><p>ってことなんだけど、</p><p>・高解像度化と大画面化と安価化したモニターたちってGPUがしっかりしてないとほとんど機能しないのだが、GPUを機能させるのは重たいし電源食うので「画面にGPUがセットでついてて、外出る時にそれがマックからは疎結合化されてておいてける」のは一度体験するととてもハードウェア設計というのか作業UXというのかとしてリーズナブルである</p><p>って感じがする。</p><p>この方面が進むと「マックブックプロからディスクリートGPUがなくなって安価化して電池も少なくていい感じになる」可能性がある。っていうかプロなくなる気がする。じゃない？</p><p>例えばマックブックのみで、11,12,13,15で、9万、１１万、１３万、１８万くらいでcpuとメモリフルフルにした15インチ最高（いま２８万とか３０万）が２２万くらいの上限で、GPUは外付けする方が良い。</p><p>gpu外付けが完全に機能する場合mac proの４５万のものよりegpuのmacbook pro 22万の１５インチの方が速いわけで、ノートパソコンで十分になる（cpuとかバスの差なんて感じないと思う）。</p><p>もしかするといずれはGPU外部にできてthunderbolt (or usb type c 3.1 gen 2) 出力するipad とか出てくるのかもしれない。dock においてキーボードつけたら４ｋ２５６０ｘ１６００の画面２枚くっつけてもipad　 a12x くらいになったipad  で動くとおもう。</p></blockquote>"
+    },
+    "video": {
+      "source_url": "https://t.umblr.com/redirect?z=https%3A%2F%2Fwww.youtube.com%2F&t=ZDQ0OWMxNThlOWQxOGUxYmI4NWJjYmM0NzEwZWJhZTM1YWU3ZWNjYywxNzM3NjY2MDMzOTI%3D&b=t%3Aw_VZG2FirpzSDqHW4YQ79g&p=http%3A%2F%2Fkthjm.tumblr.com%2Fpost%2F173766603392%2Fevangelion-21-best-dad&m=1",
+      "source_title": "youtube.com",
+      "caption": "<p><a href=\"http://evangelion-21.tumblr.com/post/168228310863/best-dad\" class=\"tumblr_blog\" target=\"_blank\">evangelion-21</a>:</p>\n\n<blockquote><p>Best Dad</p></blockquote>",
+      "permalink_url": "https://www.youtube.com/watch?v=padPBPyL8Dk",
+      "html5_capable": true,
+      "video": {
+        "youtube": {
+          "video_id": "padPBPyL8Dk",
+          "width": 540,
+          "height": 304
+        }
+      },
+      "thumbnail_url": "https://i.ytimg.com/vi/padPBPyL8Dk/hqdefault.jpg",
+      "thumbnail_width": 480,
+      "thumbnail_height": 360,
+      "player": [
+        {
+          "width": 250,
+          "embed_code": "<iframe width=\"250\" height=\"141\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>"
+        },
+        {
+          "width": 400,
+          "embed_code": "<iframe width=\"400\" height=\"225\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>"
+        },
+        {
+          "width": 500,
+          "embed_code": "<iframe width=\"500\" height=\"281\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>"
+        }
+      ],
+      "video_type": "youtube"
+    },
+    "audio": {
+      "source_url": "http://medusalily.tumblr.com/post/173363146018/橘麻美-vanquish",
+      "source_title": "medusalily",
+      "artist": "橘麻美",
+      "album": "DARLING in the FRANXX Original Soundtrack vol. 1",
+      "track_name": "Vanquish",
+      "album_art": "https://78.media.tumblr.com/tumblr_p7v1vaZIIG1uzwbyjo1_1524860470_cover.jpg",
+      "caption": "",
+      "player": "<iframe class=\"tumblr_audio_player tumblr_audio_player_173391616742\" src=\"http://kthjm.tumblr.com/post/173391616742/audio_player_iframe/kthjm/tumblr_p7v1vaZIIG1uzwbyj?audio_file=https%3A%2F%2Fwww.tumblr.com%2Faudio_file%2Fkthjm%2F173391616742%2Ftumblr_p7v1vaZIIG1uzwbyj\" frameborder=\"0\" allowtransparency=\"true\" scrolling=\"no\" width=\"540\" height=\"169\"></iframe>",
+      "embed": "<iframe class=\"tumblr_audio_player tumblr_audio_player_173391616742\" src=\"http://kthjm.tumblr.com/post/173391616742/audio_player_iframe/kthjm/tumblr_p7v1vaZIIG1uzwbyj?audio_file=https%3A%2F%2Fwww.tumblr.com%2Faudio_file%2Fkthjm%2F173391616742%2Ftumblr_p7v1vaZIIG1uzwbyj\" frameborder=\"0\" allowtransparency=\"true\" scrolling=\"no\" width=\"540\" height=\"169\"></iframe>",
+      "plays": 1282,
+      "audio_url": "https://www.tumblr.com/audio_file/kthjm/173391616742/tumblr_p7v1vaZIIG1uzwbyj",
+      "audio_source_url": "https://www.tumblr.com/audio_file/kthjm/173391616742/tumblr_p7v1vaZIIG1uzwbyj",
+      "audio_type": "tumblr"
+    },
+    "answer": {
+      "asking_name": "Anonymous",
+      "asking_url": null,
+      "question": "Just curious: what are some anime that really stuck with you, made you stare at the credits for a good time afterwards? Gigguk's been talking about it recently speaking of A Place Further Than the Universe, I'd go with Wolf Children and Zankyou no Terror.",
+      "answer": "<p><a class=\"tumblr_blog\" href=\"http://funnyanimeshit.tumblr.com/post/173595775098/just-curious-what-are-some-anime-that-really\">funnyanimeshit</a>:</p>\n\n<blockquote><p><b>Spirited Away</b></p><figure class=\"tmblr-full\" data-orig-height=\"272\" data-orig-width=\"500\"><img src=\"https://78.media.tumblr.com/962f9d18997889dd73fb8615344a89aa/tumblr_inline_p88kttGDMR1qj09hl_540.gif\" data-orig-height=\"272\" data-orig-width=\"500\"/></figure><p>At the end as Chihiro and Haku part, the shot lingering over where they let go of each others hands really stuck with me. It was such a beautiful and bittersweet goodbye. <br/></p><p><b>Tekkonkinkireet</b></p><figure class=\"tmblr-full\" data-orig-height=\"213\" data-orig-width=\"500\" data-tumblr-attribution=\"lauriecarew:bhPvxuQjafOiCLFU2mRh4g:ZgLeyo1ndONNg\"><img src=\"https://78.media.tumblr.com/84b996aee2c0ef6112fce5a53761a40f/tumblr_nq8rghaJIN1tnthf2o1_500.gif\" data-orig-height=\"213\" data-orig-width=\"500\"/></figure><p>Honestly didn’t expect the story to be the way that it was when I first watched it. Just beautiful.  </p><p><b>Ping Pong the Animation</b></p><figure class=\"tmblr-full\" data-orig-height=\"360\" data-orig-width=\"640\"><img src=\"https://78.media.tumblr.com/1448094c18a55d1f11cc0d85f30dcd5e/tumblr_inline_p88l0lz9F01qj09hl_540.jpg\" data-orig-height=\"360\" data-orig-width=\"640\"/></figure><p>The last match (despite not even really showing it) was everything I had wanted and more. Matsumoto Taiyo is a genius. <br/></p></blockquote><p></p>"
+    },
+    "common": {
+      "type": "quote",
+      "blog_name": "kthjm",
+      "id": 173258852467,
+      "post_url": "http://kthjm.tumblr.com/post/173258852467/機械学習のセミナーに高い受講料を払って参加したのに大学の教養程度の数学を教わってる時間が9割以上を占",
+      "slug": "機械学習のセミナーに高い受講料を払って参加したのに大学の教養程度の数学を教わってる時間が9割以上を占",
+      "date": "2018-04-24 13:28:48 GMT",
+      "timestamp": 1524576528,
+      "state": "published",
+      "format": "markdown",
+      "reblog_key": "7WV1I0Pn",
+      "tags": [],
+      "short_url": "https://tmblr.co/ZpYbQv2XN24Xp",
+      "summary": "機械学習のセミナーに高い受講料を払って参加したのに、大学の教養程度の数学を教わってる時間が9割以上を占めているだとか、最近よく目にする光景なので、他人事でもあるまい。我々は過去にサボってきた負債を死ぬまでかけて払い続けなければならない宿命にあるのだ。※個人の...",
+      "is_blocks_post_format": false,
+      "recommended_source": null,
+      "recommended_color": null,
+      "note_count": 0,
+      "can_like": false,
+      "can_reblog": false,
+      "can_send_in_message": true,
+      "can_reply": false,
+      "display_avatar": true,
+      "reblog": {
+        "comment": "<p><a href=\"https://twitter.com/yaneuraou/status/988379063302549504?s=20\" target=\"_blank\">https://twitter.com/yaneuraou/status/988379063302549504?s=20</a></p>",
+        "tree_html": ""
+      },
+      "trail": [
+        {
+          "blog": {
+            "name": "gkojax",
+            "active": true,
+            "theme": {
+              "avatar_shape": "square",
+              "background_color": "#FAFAFA",
+              "body_font": "Helvetica Neue",
+              "header_bounds": 0,
+              "header_image": "https://assets.tumblr.com/images/default_header/optica_pattern_03.png?_v=a0f20b51ed40eb5a930ab86effe42a40",
+              "header_image_focused": "https://assets.tumblr.com/images/default_header/optica_pattern_03.png?_v=a0f20b51ed40eb5a930ab86effe42a40",
+              "header_image_scaled": "https://assets.tumblr.com/images/default_header/optica_pattern_03.png?_v=a0f20b51ed40eb5a930ab86effe42a40",
+              "header_stretch": true,
+              "link_color": "#529ECC",
+              "show_avatar": true,
+              "show_description": true,
+              "show_header_image": true,
+              "show_title": true,
+              "title_color": "#444444",
+              "title_font": "Gibson",
+              "title_font_weight": "bold"
+            },
+            "share_likes": false,
+            "share_following": false,
+            "can_be_followed": true
+          },
+          "post": {
+            "id": "173801755675"
+          },
+          "content_raw": "<p><blockquote>“上京する前に友人と『スタートアップ起業家には気をつけような…』と密かに誓った記憶がある。まあモテる。会社が儲かってるとかルックスとかあんま関係ない。目標に向かってストイックに情熱を燃やしてる、地元ではみたことないような生命力溢れる姿に、なんやかんや惹かれてしまう生き物なのよねー”</blockquote> <p>— <a href=\"https://twitter.com/TanakaRei_vd/status/994495893834317825\" target=\"_blank\">田中 伶さんのツイート</a></p></p>",
+          "content": "<p><blockquote><p>&ldquo;&#19978;&#20140;&#12377;&#12427;&#21069;&#12395;&#21451;&#20154;&#12392;&#12302;&#12473;&#12479;&#12540;&#12488;&#12450;&#12483;&#12503;&#36215;&#26989;&#23478;&#12395;&#12399;&#27671;&#12434;&#12388;&#12369;&#12424;&#12358;&#12394;&hellip;&#12303;&#12392;&#23494;&#12363;&#12395;&#35475;&#12387;&#12383;&#35352;&#25014;&#12364;&#12354;&#12427;&#12290;&#12414;&#12354;&#12514;&#12486;&#12427;&#12290;&#20250;&#31038;&#12364;&#20786;&#12363;&#12387;&#12390;&#12427;&#12392;&#12363;&#12523;&#12483;&#12463;&#12473;&#12392;&#12363;&#12354;&#12435;&#12414;&#38306;&#20418;&#12394;&#12356;&#12290;&#30446;&#27161;&#12395;&#21521;&#12363;&#12387;&#12390;&#12473;&#12488;&#12452;&#12483;&#12463;&#12395;&#24773;&#29105;&#12434;&#29123;&#12420;&#12375;&#12390;&#12427;&#12289;&#22320;&#20803;&#12391;&#12399;&#12415;&#12383;&#12371;&#12392;&#12394;&#12356;&#12424;&#12358;&#12394;&#29983;&#21629;&#21147;&#28322;&#12428;&#12427;&#23039;&#12395;&#12289;&#12394;&#12435;&#12420;&#12363;&#12435;&#12420;&#24825;&#12363;&#12428;&#12390;&#12375;&#12414;&#12358;&#29983;&#12365;&#29289;&#12394;&#12398;&#12424;&#12397;&#12540;&rdquo;</p></blockquote> <p>&mdash; <a href=\"https://twitter.com/TanakaRei_vd/status/994495893834317825\" target=\"_blank\">&#30000;&#20013; &#20278;&#12373;&#12435;&#12398;&#12484;&#12452;&#12540;&#12488;</a></p></p>",
+          "is_root_item": true
+        }
+      ]
+    },
+    "reblog_info": {
+      "reblogged_from_id": "173801755675",
+      "reblogged_from_url": "http://gkojax.tumblr.com/post/173801755675",
+      "reblogged_from_name": "gkojax",
+      "reblogged_from_title": "MCSG SYM",
+      "reblogged_from_uuid": "gkojax.tumblr.com",
+      "reblogged_from_can_message": true,
+      "reblogged_root_id": "173801755675",
+      "reblogged_root_url": "http://gkojax.tumblr.com/post/173801755675",
+      "reblogged_root_name": "gkojax",
+      "reblogged_root_title": "MCSG SYM",
+      "reblogged_root_uuid": "gkojax.tumblr.com",
+      "reblogged_root_can_message": true
+    },
+    "notes_info": {
+      "notes": [
+        {
+          "type": "reblog",
+          "timestamp": 1526075119,
+          "blog_name": "takachu8",
+          "blog_uuid": "takachu8.tumblr.com",
+          "blog_url": "http://takachu8.tumblr.com/",
+          "followed": false,
+          "avatar_shape": "square",
+          "post_id": "173808596679",
+          "reblog_parent_blog_name": "tk4s"
+        },
+        {
+          "type": "like",
+          "timestamp": 1526075093,
+          "blog_name": "takachu8",
+          "blog_uuid": "takachu8.tumblr.com",
+          "blog_url": "http://takachu8.tumblr.com/",
+          "followed": false,
+          "avatar_shape": "square"
+        },
+        {
+          "type": "reblog",
+          "timestamp": 1526074826,
+          "blog_name": "iroha",
+          "blog_uuid": "iroha.tumblr.com",
+          "blog_url": "http://iroha.tumblr.com/",
+          "followed": false,
+          "avatar_shape": "square",
+          "post_id": "173808472483",
+          "reblog_parent_blog_name": "mitaimon"
+        },
+        {
+          "type": "like",
+          "timestamp": 1526074825,
+          "blog_name": "iroha",
+          "blog_uuid": "iroha.tumblr.com",
+          "blog_url": "http://iroha.tumblr.com/",
+          "followed": false,
+          "avatar_shape": "square"
+        }
+      ]
+    }
+  }
+}

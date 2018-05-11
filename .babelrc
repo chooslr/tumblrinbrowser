@@ -1,0 +1,15 @@
+{
+  "plugins": [["transform-runtime", { "helpers": false, "polyfill": false, "regenerator": true }]],
+  "env": {
+    "TEST": {
+      "presets": ["env", "power-assert"],
+      "plugins": ["istanbul"]
+    },
+    "ENV": {
+      "presets": ["env"]
+    },
+    "BUILD": {
+      "presets": ["es2015-rollup"]
+    }
+  }
+}
