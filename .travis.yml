@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '8'
+cache:
+  yarn: true
+  directories:
+  - node_modules
+after_success:
+- yarn coverage
+deploy:
+  provider: npm
+  email: toxictoxer@gmail.com
+  on:
+    tags: true
+    repo: kthjm/tumblrinbrowser
+    branch: publish
+  api_key:
+    secure: PbEkNW09v0PL483pxwhQVdt6nsHeb/UG948qtbn8BLHRfb94XuY3vS6hIibNzMD+piHtl+3tzEeXFxwI5QOkjKEonG2d5Cw8JNUfHBBKZ75OMsIrAsrLLAtUD13jeKFguzXtPQXr2G++GQAnDZzrCcRazk7S1u2PiXabb0G0I+fU8Tmk629uHb8vCf1W1ldeV3By2jJF6g2pMbHY2F9DHvCjFnL/w/7sK5ihUDQRjuSa596mK5T/HXuIj7j6oWeBQ9eXu+eGAWYmiCte6xMocBLzBidaullaWSudko7eWyk17+kZUQCi5sEiVU1Fqcvn3cnBzNPPSUdMw3+qpu1JfIDrE7P5c+0p+6FUcHLotZzXbuhXdHV9tk9qC/BjQMHMSt1+K90u/QSN33r+RWupoueaYSGGCZdVSMkwuoVs6SdhqgHGtYjz5lLfDS1DKLhibSwVXoK4er6j9rjoDrUZAZS2iWzrvAL8eRaHVw+SlyeOFn+vUm6xkGMYS118hm1lLfC/xWQGgJSWgXNtC7u6sTN6c1XDtcu4Z+yIjVqmWA2KghouquYSNgezAdzd4bz4AuEGjhEhl37V+7s6RBTw/hEHnEf0WV3ZMlJAXS/G54Fq8+76W8gsf4BOISjaRE+zyrvXUNc/EFjaRRYwzdQiqGlqqyQR1JQMhmw2ppZtKJI=

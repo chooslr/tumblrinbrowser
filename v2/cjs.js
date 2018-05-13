@@ -102,6 +102,10 @@ var asserts = function asserts(condition, message) {
   return !condition && throws(message)
 }
 
+var paramFilter = function paramFilter(value) {
+  return Boolean(value) || typeof value === 'number'
+}
+
 var joinParams = function joinParams() {
   var params =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
@@ -125,10 +129,6 @@ var joinParams = function joinParams() {
           })
           .join('&')
     : ''
-}
-
-var paramFilter = function paramFilter(value) {
-  return Boolean(value) || typeof value === 'number'
 }
 
 var recursiveAddPostTillDone = function recursiveAddPostTillDone(feed) {
@@ -178,7 +178,7 @@ var ORIGIN = 'https://api.tumblr.com'
 var API_URL = function API_URL(account, proxy) {
   return (proxy || ORIGIN) + '/v2/blog/' + identifier(account)
 }
-var MAX_INCREMENT = 20
+var MAX_LIMIT = 20
 var method = 'GET'
 var mode = 'cors'
 
@@ -194,6 +194,12 @@ var postTypes = [
 ]
 
 var avatarSizes = [16, 24, 30, 40, 48, 64, 96, 128, 512]
+
+var avatar = function avatar(account) {
+  var size =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 64
+  return API_URL(account) + '/avatar/' + size
+}
 
 var isSuccess = function isSuccess(status) {
   return status === 200 || status === 201
@@ -214,18 +220,38 @@ var fetchInterface = function fetchInterface() {
     })
 }
 
-var postsInterface = function postsInterface(api_key, account, params, proxy) {
-  var _ref2 = params || {},
-    type = _ref2.type,
-    tag = _ref2.tag,
-    id = _ref2.id,
-    limit = _ref2.limit,
-    offset = _ref2.offset,
-    reblog_info = _ref2.reblog_info,
-    notes_info = _ref2.notes_info,
-    filter = _ref2.filter
+var requireAssert = function requireAssert(api_key, proxy) {
+  return asserts(
+    typeof api_key === 'string' || typeof proxy === 'string',
+    'required api_key || proxy'
+  )
+}
 
-  asserts(typeof api_key === 'string')
+var accountAssert = function accountAssert(account) {
+  return asserts(typeof account === 'string', 'required account')
+}
+
+var postsInterface = function postsInterface() {
+  var _ref2 =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    api_key = _ref2.api_key,
+    proxy = _ref2.proxy,
+    account = _ref2.account,
+    params = _ref2.params
+
+  requireAssert(api_key, proxy)
+  accountAssert(account)
+
+  var _ref3 = params || {},
+    type = _ref3.type,
+    tag = _ref3.tag,
+    id = _ref3.id,
+    limit = _ref3.limit,
+    offset = _ref3.offset,
+    reblog_info = _ref3.reblog_info,
+    notes_info = _ref3.notes_info,
+    filter = _ref3.filter
+
   return fetchInterface(
     API_URL(account, proxy) +
       '/posts' +
@@ -244,90 +270,111 @@ var postsInterface = function postsInterface(api_key, account, params, proxy) {
   )
 }
 
-var infoInterface = function infoInterface(api_key, account, proxy) {
-  asserts(typeof api_key === 'string')
+var infoInterface = function infoInterface() {
+  var _ref4 =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    api_key = _ref4.api_key,
+    proxy = _ref4.proxy,
+    account = _ref4.account
+
+  requireAssert(api_key, proxy)
+  accountAssert(account)
+
   return fetchInterface(
     API_URL(account, proxy) + '/info' + joinParams({ api_key: api_key }),
     { method: method, mode: mode }
   )
 }
 
-var _avatar = function _avatar(account) {
-  var size =
-    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 64
-  return API_URL(account) + '/avatar/' + size
-}
-var _posts = function _posts(api_key, account, params, proxy) {
-  return postsInterface(api_key, account, params, proxy).then(function(_ref3) {
-    var posts = _ref3.posts
-    return posts
-  })
-}
-var _post = function _post(api_key, account, id) {
-  var _ref4 =
-      arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
-    reblog_info = _ref4.reblog_info,
-    notes_info = _ref4.notes_info
-
-  var proxy = arguments[4]
-  return postsInterface(
-    api_key,
-    account,
-    { id: id, reblog_info: reblog_info, notes_info: notes_info },
-    proxy
-  ).then(function(_ref5) {
-    var posts = _ref5.posts
-    return posts[0]
-  })
-}
-var _total = function _total(api_key, account) {
-  var _ref6 =
-      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-    type = _ref6.type,
-    tag = _ref6.tag
-
-  var proxy = arguments[3]
-  return postsInterface(
-    api_key,
-    account,
-    { limit: 1, type: type, tag: tag },
-    proxy
-  ).then(function(_ref7) {
-    var total_posts = _ref7.total_posts
-    return total_posts
-  })
-}
-var _blog = function _blog(api_key, account, proxy) {
-  return infoInterface(api_key, account, proxy).then(function(_ref8) {
-    var blog = _ref8.blog
+var _blog = function _blog(options) {
+  return infoInterface(options).then(function(_ref5) {
+    var blog = _ref5.blog
     return blog
   })
 }
-var _samplingTags = function _samplingTags() {
-  return _samplingPosts.apply(undefined, arguments).then(postsToTags)
+var _posts = function _posts(options) {
+  return postsInterface(options).then(function(_ref6) {
+    var posts = _ref6.posts
+    return posts
+  })
+}
+var _total = function _total() {
+  var _ref7 =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    api_key = _ref7.api_key,
+    proxy = _ref7.proxy,
+    account = _ref7.account,
+    params = _ref7.params
+
+  var _ref8 = params || {},
+    type = _ref8.type,
+    tag = _ref8.tag
+
+  return postsInterface({
+    api_key: api_key,
+    proxy: proxy,
+    account: account,
+    params: { limit: 1, type: type, tag: tag }
+  }).then(function(_ref9) {
+    var total_posts = _ref9.total_posts
+    return total_posts
+  })
+}
+var _post = function _post() {
+  var _ref10 =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    api_key = _ref10.api_key,
+    proxy = _ref10.proxy,
+    account = _ref10.account,
+    id = _ref10.id,
+    params = _ref10.params
+
+  asserts(typeof id === 'string' || typeof id === 'number', 'required id')
+
+  var _ref11 = params || {},
+    reblog_info = _ref11.reblog_info,
+    notes_info = _ref11.notes_info
+
+  return postsInterface({
+    api_key: api_key,
+    proxy: proxy,
+    account: account,
+    params: { id: id, reblog_info: reblog_info, notes_info: notes_info }
+  }).then(function(_ref12) {
+    var posts = _ref12.posts
+    return posts[0]
+  })
+}
+var _samplingTags = function _samplingTags(options) {
+  return _samplingPosts(options).then(postsToTags)
 }
 var _samplingPosts = async function _samplingPosts() {
-  var _ref9 =
+  var _ref13 =
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    api_key = _ref9.api_key,
-    account = _ref9.account,
-    params = _ref9.params,
-    denom = _ref9.denom,
-    maxNum = _ref9.maxNum,
-    proxy = _ref9.proxy
+    api_key = _ref13.api_key,
+    proxy = _ref13.proxy,
+    account = _ref13.account,
+    params = _ref13.params,
+    denom = _ref13.denom,
+    maxLimit = _ref13.maxLimit
 
   denom = denom || SAMPLING_DENOM
-  maxNum = maxNum || SAMPLING_MAX_NUM
-  asserts(maxNum <= MAX_INCREMENT, 'invalid maxNum')
+  maxLimit = maxLimit || SAMPLING_MAX_NUM
+  asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
 
-  var _ref10 = params || {},
-    type = _ref10.type,
-    tag = _ref10.tag,
-    reblog_info = _ref10.reblog_info,
-    notes_info = _ref10.notes_info,
-    filter = _ref10.filter
+  var _ref14 = params || {},
+    type = _ref14.type,
+    tag = _ref14.tag,
+    reblog_info = _ref14.reblog_info,
+    notes_info = _ref14.notes_info,
+    filter = _ref14.filter
 
-  var length = await _total(api_key, account, { type: type, tag: tag }, proxy)
+  var length = await _total({
+    api_key: api_key,
+    proxy: proxy,
+    account: account,
+    params: { type: type, tag: tag }
+  })
   asserts(length > 0, 'sampling account has no posts')
 
   var maxIncrement = Math.floor(length / denom)
@@ -340,47 +387,52 @@ var _samplingPosts = async function _samplingPosts() {
       random: true,
       promisify: true,
       yielded: function yielded(indexedArr) {
-        return _posts(
-          api_key,
-          account,
-          {
+        return _posts({
+          api_key: api_key,
+          proxy: proxy,
+          account: account,
+          params: {
             offset: indexedArr[0],
-            limit: indexedArr.length < maxNum ? indexedArr.length : maxNum,
+            limit: indexedArr.length < maxLimit ? indexedArr.length : maxLimit,
             type: type,
             tag: tag,
             reblog_info: reblog_info,
             notes_info: notes_info,
             filter: filter
-          },
-          proxy
-        )
+          }
+        })
       }
     })
   )
 }
 var _Timeline = async function _Timeline() {
-  var _ref11 =
+  var _ref15 =
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    api_key = _ref11.api_key,
-    account = _ref11.account,
-    random = _ref11.random,
-    params = _ref11.params,
-    proxy = _ref11.proxy
+    api_key = _ref15.api_key,
+    proxy = _ref15.proxy,
+    account = _ref15.account,
+    random = _ref15.random,
+    params = _ref15.params
 
-  var _ref12 = params || {},
-    _ref12$offset = _ref12.offset,
-    offset = _ref12$offset === undefined ? 0 : _ref12$offset,
-    _ref12$limit = _ref12.limit,
-    limit = _ref12$limit === undefined ? MAX_INCREMENT : _ref12$limit,
-    type = _ref12.type,
-    tag = _ref12.tag,
-    reblog_info = _ref12.reblog_info,
-    notes_info = _ref12.notes_info,
-    filter = _ref12.filter
+  var _ref16 = params || {},
+    _ref16$offset = _ref16.offset,
+    offset = _ref16$offset === undefined ? 0 : _ref16$offset,
+    _ref16$limit = _ref16.limit,
+    limit = _ref16$limit === undefined ? MAX_LIMIT : _ref16$limit,
+    type = _ref16.type,
+    tag = _ref16.tag,
+    reblog_info = _ref16.reblog_info,
+    notes_info = _ref16.notes_info,
+    filter = _ref16.filter
 
-  asserts(limit <= MAX_INCREMENT, 'Posts > invalid limit')
+  asserts(limit <= MAX_LIMIT, 'Posts > invalid limit')
 
-  var length = await _total(api_key, account, { type: type, tag: tag }, proxy)
+  var length = await _total({
+    api_key: api_key,
+    proxy: proxy,
+    account: account,
+    params: { type: type, tag: tag }
+  })
   asserts(offset < length, 'Posts > invalid offset')
 
   return tiloop({
@@ -389,10 +441,11 @@ var _Timeline = async function _Timeline() {
     random: random,
     promisify: true,
     yielded: function yielded(indexedArr) {
-      return _posts(
-        api_key,
-        account,
-        {
+      return _posts({
+        api_key: api_key,
+        proxy: proxy,
+        account: account,
+        params: {
           offset: indexedArr[0] + offset,
           limit: indexedArr.length,
           type: type,
@@ -400,103 +453,131 @@ var _Timeline = async function _Timeline() {
           reblog_info: reblog_info,
           notes_info: notes_info,
           filter: filter
-        },
-        proxy
-      )
+        }
+      })
     }
   })
 }
 var Tumblr = (function() {
-  function Tumblr(api_key, proxy) {
+  function Tumblr() {
+    var _ref17 =
+        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      api_key = _ref17.api_key,
+      proxy = _ref17.proxy
+
     classCallCheck(this, Tumblr)
 
-    asserts(api_key)
+    requireAssert(api_key, proxy)
     this.api_key = api_key
     this.proxy = proxy
   }
 
   createClass(Tumblr, [
     {
-      key: 'avatar',
-      value: function avatar(account, size) {
-        return _avatar(account, size)
+      key: 'blog',
+      value: function blog(account) {
+        return _blog({
+          api_key: this.api_key,
+          proxy: this.proxy,
+          account: account
+        })
       }
     },
     {
       key: 'posts',
-      value: function posts(api_key, account, params, proxy) {
-        return _posts(this.api_key, account, params, proxy || this.proxy)
-      }
-    },
-    {
-      key: 'post',
-      value: function post(api_key, account, id, params, proxy) {
-        return _post(this.api_key, account, id, params, proxy || this.proxy)
+      value: function posts(account, params) {
+        return _posts({
+          api_key: this.api_key,
+          proxy: this.proxy,
+          account: account,
+          params: params
+        })
       }
     },
     {
       key: 'total',
-      value: function total(account, params, proxy) {
-        return _total(this.api_key, account, params, proxy || this.proxy)
+      value: function total(account, params) {
+        return _total({
+          api_key: this.api_key,
+          proxy: this.proxy,
+          account: account,
+          params: params
+        })
       }
     },
     {
-      key: 'blog',
-      value: function blog(account, proxy) {
-        return _blog(this.api_key, account, proxy || this.proxy)
+      key: 'post',
+      value: function post(account, id, params) {
+        return _post({
+          api_key: this.api_key,
+          proxy: this.proxy,
+          account: account,
+          id: id,
+          params: params
+        })
       }
     },
     {
       key: 'samplingPosts',
-      value: function samplingPosts(_ref13) {
-        var account = _ref13.account,
-          params = _ref13.params,
-          denom = _ref13.denom,
-          maxNum = _ref13.maxNum,
-          proxy = _ref13.proxy
+      value: function samplingPosts() {
+        var _ref18 =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : {},
+          account = _ref18.account,
+          params = _ref18.params,
+          denom = _ref18.denom,
+          maxLimit = _ref18.maxLimit
 
         return _samplingPosts({
           api_key: this.api_key,
+          proxy: this.proxy,
           account: account,
           params: params,
           denom: denom,
-          maxNum: maxNum,
-          proxy: proxy || this.proxy
+          maxLimit: maxLimit
         })
       }
     },
     {
       key: 'samplingTags',
-      value: function samplingTags(_ref14) {
-        var account = _ref14.account,
-          params = _ref14.params,
-          denom = _ref14.denom,
-          maxNum = _ref14.maxNum,
-          proxy = _ref14.proxy
+      value: function samplingTags() {
+        var _ref19 =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : {},
+          account = _ref19.account,
+          params = _ref19.params,
+          denom = _ref19.denom,
+          maxLimit = _ref19.maxLimit,
+          proxy = _ref19.proxy
 
         return _samplingTags({
           api_key: this.api_key,
+          proxy: this.proxy,
           account: account,
           params: params,
           denom: denom,
-          maxNum: maxNum,
-          proxy: proxy || this.proxy
+          maxLimit: maxLimit
         })
       }
     },
     {
       key: 'Timeline',
-      value: function Timeline(_ref15) {
-        var account = _ref15.account,
-          params = _ref15.params,
-          proxy = _ref15.proxy,
-          random = _ref15.random
+      value: function Timeline() {
+        var _ref20 =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : {},
+          account = _ref20.account,
+          params = _ref20.params,
+          random = _ref20.random
 
         return _Timeline({
           api_key: this.api_key,
+          proxy: this.proxy,
           account: account,
           params: params,
-          proxy: proxy,
           random: random
         })
       }
@@ -507,11 +588,11 @@ var Tumblr = (function() {
 
 exports.postTypes = postTypes
 exports.avatarSizes = avatarSizes
-exports.avatar = _avatar
-exports.posts = _posts
-exports.post = _post
-exports.total = _total
+exports.avatar = avatar
 exports.blog = _blog
+exports.posts = _posts
+exports.total = _total
+exports.post = _post
 exports.samplingTags = _samplingTags
 exports.samplingPosts = _samplingPosts
 exports.Timeline = _Timeline

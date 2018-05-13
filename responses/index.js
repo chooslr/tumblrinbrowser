@@ -29,9 +29,9 @@ export const createCommon = (posts) => {
 
 const createV2 = async () => {
 
-  const arg = [process.env.CONSUMER_KEY, account]
+  const tumblr = new v2.Tumblr({ api_key: process.env.CONSUMER_KEY })
 
-  const fetchPostByType = (type) => v2.posts(...arg, { limit: 1, type }).then(extractZero)
+  const fetchPostByType = (type) => tumblr.posts(account, { limit: 1, type }).then(extractZero)
 
   const quote = await fetchPostByType('quote')
   const text = await fetchPostByType('text')
@@ -63,7 +63,7 @@ const createV2 = async () => {
   const extractExclude = HoExtractExclude(({ type }) => Object.keys(map[type]))
 
   const fetchPostWithExcludes = (key, extractExclude) =>
-    v2.posts(...arg, { limit: 1, [key]: true })
+    tumblr.posts(account, { limit: 1, [key]: true })
     .then(extractZero)
     .then(extractExclude)
 
@@ -82,7 +82,7 @@ const createV2 = async () => {
     return delete post[key]
   }))
 
-  const blog = await v2.blog(...arg)
+  const blog = await tumblr.blog(account)
 
   return { blog, post: { quote, text, chat, photo, link, video, audio, answer, common, reblog_info, notes_info } }
 }

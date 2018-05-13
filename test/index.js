@@ -1,6 +1,5 @@
 import assert from 'assert'
 import rewire from 'rewire'
-import sinon from 'sinon'
 import * as v2 from '../rewired/v2.js'
 import * as v1 from '../rewired/v1.js'
 
@@ -13,13 +12,13 @@ describe('posts', () => {
     const { posts: api } = v2
 
     it(`{}`, async () => {
-      const posts = await api(api_key, account)
+      const posts = await api({ api_key, account })
       assert.equal(posts.length, 20)
     })
 
     it(`{ type, limit: 1 }`, () => Promise.all(
       v2.postTypes.map(type =>
-        api(api_key, account, { type, limit: 1 }).then(posts => {
+        api({ api_key, account, params: { type, limit: 1 } }).then(posts => {
           if (posts.length) assert.equal(posts.length, 1)
           assert.ok(posts.every(post => post.type === type))
         })
@@ -58,10 +57,10 @@ describe('total', () => {
 
   describe(`v2`, () => {
     const { total: api } = v2
-    const test = (params) => () => api(api_key, account, params).then(total => assert.ok(typeof total === 'number'))
+    const test = (params) => () => api({ api_key, account, params }).then(total => assert.ok(typeof total === 'number'))
     it('{}', test())
     it('{ type }', test({ type: 'video' }))
-    it('{ tag }', test({ tag: 'Tumblr Tuesday' }))
+    it('{ tag }', test({ tag: 'red alert' }))
   })
 
   describe(`v1`, () => {
@@ -69,14 +68,15 @@ describe('total', () => {
     const test = (params) => () => api(account, params).then(total => assert.ok(typeof total === 'number'))
     it('{}', test())
     it('{ type }', test({ type: 'video' }))
-    it('{ tag }', test({ tag: 'Tumblr Tuesday' }))
+    it('{ tag }', test({ tag: 'red alert' }))
   })
 
 })
 
 describe('post', () => {
 
-  const id = '99671967250'
+  // const id = '99671967250'
+  const id = 99671967250
 
   describe(`v2`, () => {
     const { post: api } = v2
@@ -96,7 +96,7 @@ describe('post', () => {
     ]
 
     const test = (params) => () =>
-      api(api_key, account, id, params).then(post => {
+      api({ api_key, account, id, params }).then(post => {
         const { notes_info, reblog_info } = params || {}
 
         assert.equal(post.id, id)
@@ -125,7 +125,7 @@ describe('post', () => {
 describe('blog', () => {
   it(`v2`, () => {
     const { blog: api } = v2
-    return api(api_key, account).then(blog => assert.ok(blog.name, account))
+    return api({ api_key, account }).then(blog => assert.ok(blog.name, account))
   })
   it(`v1`, () => {
     const { blog: api } = v1
@@ -136,22 +136,22 @@ describe('blog', () => {
 describe('sampling', () => {
   const type = 'photo'
   const denom = 4
-  const maxNum = 3
+  const maxLimit = 3
 
-  describe('samplingPosts({ denom, maxNum, params: { type } })', () => {
+  describe('samplingPosts({ denom, maxLimit, params: { type } })', () => {
     const test = (promise) => () => promise.then(posts => assert.ok(posts.every(post => post.type === type)))
     it('v2',
-      test(v2.samplingPosts({ account, params: { type }, denom, maxNum, api_key })))
+      test(v2.samplingPosts({ account, params: { type }, denom, maxLimit, api_key })))
     it('v1',
-      test(v1.samplingPosts({ account, params: { type }, denom, maxNum })))
+      test(v1.samplingPosts({ account, params: { type }, denom, maxLimit })))
   })
 
-  describe('samplingTags({ denom, maxNum, params: { type } })', () => {
+  describe('samplingTags({ denom, maxLimit, params: { type } })', () => {
     const test = (promise) => () => promise.then(tags => assert.ok(tags.every(tag => typeof tag === 'string')))
     it('v2',
-      test(v2.samplingTags({ account, params: { type }, denom, maxNum, api_key })))
+      test(v2.samplingTags({ account, params: { type }, denom, maxLimit, api_key })))
     it('v1',
-      test(v1.samplingTags({ account, params: { type }, denom, maxNum })))
+      test(v1.samplingTags({ account, params: { type }, denom, maxLimit })))
   })
 })
 

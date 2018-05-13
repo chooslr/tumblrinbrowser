@@ -14,7 +14,7 @@
     },
     "text/regular": {
       "regular-title": null,
-      "regular-body": "<p><a href=\"http://gkojax.tumblr.com/post/173801755675\" class=\"tumblr_blog\" target=\"_blank\">gkojax</a>:</p>\n\n<blockquote><blockquote>“上京する前に友人と『スタートアップ起業家には気をつけような…』と密かに誓った記憶がある。まあモテる。会社が儲かってるとかルックスとかあんま関係ない。目標に向かってストイックに情熱を燃やしてる、地元ではみたことないような生命力溢れる姿に、なんやかんや惹かれてしまう生き物なのよねー”</blockquote> <p>— <a href=\"https://twitter.com/TanakaRei_vd/status/994495893834317825\" target=\"_blank\">田中 伶さんのツイート</a></p></blockquote>"
+      "regular-body": "<p><a href=\"http://gkojax.tumblr.com/post/173825968435\" class=\"tumblr_blog\" target=\"_blank\">gkojax</a>:</p>\n\n<blockquote><blockquote>“「反対するなら対案を出せ」勢の皆様、対案が出ました 共産 “時間外上限は月45時間” 改正案の大綱まとめる | NHKニュース <a href=\"https://t.co/UfX7R9FdOr%E2%80%9D\" target=\"_blank\">https://t.co/UfX7R9FdOr”</a></blockquote> <p>— <a href=\"https://twitter.com/lp_announce/status/995011451562610688\" target=\"_blank\">有村悠＠5/6砲雷撃戦I-08さんのツイート</a></p></blockquote>"
     },
     "chat/conversation": {
       "conversation-title": null,
@@ -35,14 +35,51 @@
     "photo": {
       "photo-caption": "",
       "width": 540,
-      "height": 960,
-      "photo-url-1280": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_1280.jpg",
-      "photo-url-500": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_500.jpg",
-      "photo-url-400": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_400.jpg",
-      "photo-url-250": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_250.jpg",
-      "photo-url-100": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_100.jpg",
-      "photo-url-75": "https://78.media.tumblr.com/93a8df788402575cf9c6b8433226d869/tumblr_p7ipnilU0S1vdbx3no1_75sq.jpg",
-      "photos": []
+      "height": 257,
+      "photo-url-1280": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_540.gif",
+      "photo-url-500": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_500.gif",
+      "photo-url-400": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_400.gif",
+      "photo-url-250": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_250.gif",
+      "photo-url-100": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_100.gif",
+      "photo-url-75": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_75sq.gif",
+      "photos": [
+        {
+          "offset": "o4",
+          "caption": "",
+          "width": 540,
+          "height": 257,
+          "photo-url-1280": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_540.gif",
+          "photo-url-500": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_500.gif",
+          "photo-url-400": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_400.gif",
+          "photo-url-250": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_250.gif",
+          "photo-url-100": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_100.gif",
+          "photo-url-75": "https://78.media.tumblr.com/0d4c34790e733b684151e2c885dc415c/tumblr_oe8xuo5SQq1r2hy3ro4_75sq.gif"
+        },
+        {
+          "offset": "o1",
+          "caption": "",
+          "width": 540,
+          "height": 257,
+          "photo-url-1280": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_540.gif",
+          "photo-url-500": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_500.gif",
+          "photo-url-400": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_400.gif",
+          "photo-url-250": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_250.gif",
+          "photo-url-100": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_100.gif",
+          "photo-url-75": "https://78.media.tumblr.com/d93d8c8c4d016afa98f719cfd95b3fc9/tumblr_oe8xuo5SQq1r2hy3ro1_75sq.gif"
+        },
+        {
+          "offset": "o2",
+          "caption": "",
+          "width": 540,
+          "height": 257,
+          "photo-url-1280": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_540.gif",
+          "photo-url-500": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_500.gif",
+          "photo-url-400": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_400.gif",
+          "photo-url-250": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_250.gif",
+          "photo-url-100": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_100.gif",
+          "photo-url-75": "https://78.media.tumblr.com/94520fac7b64514b35b7f909a6b53ed6/tumblr_oe8xuo5SQq1r2hy3ro2_r1_75sq.gif"
+        }
+      ]
     },
     "link": {
       "link-text": "macにeGPUを繋いでTensorflow(GPU版)を動かす - Qiita",
@@ -50,11 +87,11 @@
       "link-description": "<p><a href=\"http://toukubo.com/post/172285931146/mac%E3%81%ABegpu%E3%82%92%E7%B9%8B%E3%81%84%E3%81%A7tensorflowgpu%E7%89%88%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99-qiita\" class=\"tumblr_blog\" target=\"_blank\">toukubo</a>:</p>\n\n<blockquote><p>この流れは来ますね。GPUよくわかってないひとも知っといたほうが良い</p><p>・人工知能の巨大ムーブメント需要でGPU産業は盛り上がりまくっている。このスケールメリットがのっかって安価化が始まるだろう。<br/><br/>・イラレとかでっかいモニターとかブラウザとかOS描画とか、GPUを使う処理というが現在は重くなってきてる。iosとかのデバイスとくらべていまパソコンが大きく差をつけているのは主にGPU。</p><p>・macbook proとかが高いのってGPUをモバイルで早くするのが高いからってところがかなりある。そしてこいつらは外付けモニターとか重い処理するときように「二枚のGPU用カードを搭載している」のであった。消費電力が巨大ってのもあって普段はこの「いいほうのGPUは死んでる」のだった。無駄だよね。</p><p>・macbook の一番安いやつ（あるいは２００８年とかのmacbook air）に外付けGPU付けたほうが、最新のマックブックプロ25万より遥かにサクサクになる。</p><p>ってことなんだけど、</p><p>・高解像度化と大画面化と安価化したモニターたちってGPUがしっかりしてないとほとんど機能しないのだが、GPUを機能させるのは重たいし電源食うので「画面にGPUがセットでついてて、外出る時にそれがマックからは疎結合化されてておいてける」のは一度体験するととてもハードウェア設計というのか作業UXというのかとしてリーズナブルである</p><p>って感じがする。</p><p>この方面が進むと「マックブックプロからディスクリートGPUがなくなって安価化して電池も少なくていい感じになる」可能性がある。っていうかプロなくなる気がする。じゃない？</p><p>例えばマックブックのみで、11,12,13,15で、9万、１１万、１３万、１８万くらいでcpuとメモリフルフルにした15インチ最高（いま２８万とか３０万）が２２万くらいの上限で、GPUは外付けする方が良い。</p><p>gpu外付けが完全に機能する場合mac proの４５万のものよりegpuのmacbook pro 22万の１５インチの方が速いわけで、ノートパソコンで十分になる（cpuとかバスの差なんて感じないと思う）。</p><p>もしかするといずれはGPU外部にできてthunderbolt (or usb type c 3.1 gen 2) 出力するipad とか出てくるのかもしれない。dock においてキーボードつけたら４ｋ２５６０ｘ１６００の画面２枚くっつけてもipad　 a12x くらいになったipad  で動くとおもう。</p></blockquote>"
     },
     "video": {
-      "video-caption": "<p><a href=\"http://evangelion-21.tumblr.com/post/168228310863/best-dad\" class=\"tumblr_blog\" target=\"_blank\">evangelion-21</a>:</p>\n\n<blockquote><p>Best Dad</p></blockquote>",
-      "video-source": "<iframe width=\"540\" height=\"304\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>",
-      "video-player": "<iframe width=\"400\" height=\"225\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>",
-      "video-player-500": "<iframe width=\"500\" height=\"281\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>",
-      "video-player-250": "<iframe width=\"250\" height=\"141\"  id=\"youtube_iframe\" src=\"https://www.youtube.com/embed/padPBPyL8Dk?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>"
+      "video-caption": "<p><a href=\"https://taopriest.tumblr.com/post/173773567704/nocchis-black-out-during-the-handy-man\" class=\"tumblr_blog\" target=\"_blank\">taopriest</a>:</p><blockquote>\n<p>Nocchis black out during the “Handy Man” performance</p>\n<p>Source: WE ARE Perfume - WORLD TOUR 3rd DOCUMENT</p>\n</blockquote>",
+      "video-source": "a:1:{s:2:\"o1\";a:18:{s:8:\"duration\";d:123;s:12:\"content_hash\";s:32:\"793bb9e719a161f623d9db27f5cff7b6\";s:24:\"smart_thumbnail_filename\";s:35:\"tumblr_p8j111dY2F1s3n6uo_smart1.jpg\";s:12:\"content_type\";s:9:\"video/mp4\";s:9:\"extension\";s:3:\"mp4\";s:5:\"width\";i:1280;s:6:\"height\";i:720;s:6:\"aspect\";d:1.78;s:15:\"is_video_bucket\";i:1;s:12:\"is_robot_api\";i:1;s:21:\"is_internal_transcode\";i:1;s:18:\"video_preview_size\";s:7:\"200x112\";s:38:\"video_preview_heywatch_thumbnail_count\";i:5;s:29:\"video_preview_filename_prefix\";s:25:\"tumblr_p8j111dY2F1s3n6uo_\";s:7:\"encodes\";s:11:\"176,480,web\";s:27:\"video_preview_filmstrip_url\";s:75:\"https://78.media.tumblr.com/previews/tumblr_p8j111dY2F1s3n6uo_filmstrip.jpg\";s:8:\"revision\";i:0;s:9:\"downloads\";i:549;}}",
+      "video-player": "\n<video  id='embed-5af709195ca94470782793' class='crt-video crt-skin-default' width='400' height='225' poster='https://78.media.tumblr.com/tumblr_p8j111dY2F1s3n6uo_smart1.jpg' preload='none' muted data-crt-video data-crt-options='{\"autoheight\":null,\"duration\":123,\"hdUrl\":\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo\",\"filmstrip\":{\"url\":\"https://78.media.tumblr.com/previews/tumblr_p8j111dY2F1s3n6uo_filmstrip.jpg\",\"width\":\"200\",\"height\":\"112\"}}' >\n    <source src=\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo/480\" type=\"video/mp4\">\n</video>\n",
+      "video-player-500": "\n<video  id='embed-5af709195ca94470782793' class='crt-video crt-skin-default' width='500' height='281' poster='https://78.media.tumblr.com/tumblr_p8j111dY2F1s3n6uo_smart1.jpg' preload='none' muted data-crt-video data-crt-options='{\"autoheight\":null,\"duration\":123,\"hdUrl\":\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo\",\"filmstrip\":{\"url\":\"https://78.media.tumblr.com/previews/tumblr_p8j111dY2F1s3n6uo_filmstrip.jpg\",\"width\":\"200\",\"height\":\"112\"}}' >\n    <source src=\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo/480\" type=\"video/mp4\">\n</video>\n",
+      "video-player-250": "\n<video  id='embed-5af709195ca94470782793' class='crt-video crt-skin-default' width='250' height='141' poster='https://78.media.tumblr.com/tumblr_p8j111dY2F1s3n6uo_smart1.jpg' preload='none' muted data-crt-video data-crt-options='{\"autoheight\":null,\"duration\":123,\"hdUrl\":\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo\",\"filmstrip\":{\"url\":\"https://78.media.tumblr.com/previews/tumblr_p8j111dY2F1s3n6uo_filmstrip.jpg\",\"width\":\"200\",\"height\":\"112\"}}' >\n    <source src=\"https://kthjm.tumblr.com/video_file/t:w_VZG2FirpzSDqHW4YQ79g/173822005827/tumblr_p8j111dY2F1s3n6uo/480\" type=\"video/mp4\">\n</video>\n"
     },
     "audio": {
       "id3-artist": "橘麻美",
@@ -63,7 +100,7 @@
       "audio-caption": "",
       "audio-player": "<iframe class=\"tumblr_audio_player tumblr_audio_player_173391616742\" src=\"http://kthjm.tumblr.com/post/173391616742/audio_player_iframe/kthjm/tumblr_p7v1vaZIIG1uzwbyj?audio_file=https%3A%2F%2Fwww.tumblr.com%2Faudio_file%2Fkthjm%2F173391616742%2Ftumblr_p7v1vaZIIG1uzwbyj\" frameborder=\"0\" allowtransparency=\"true\" scrolling=\"no\" width=\"540\" height=\"169\"></iframe>",
       "audio-embed": "<iframe class=\"tumblr_audio_player tumblr_audio_player_173391616742\" src=\"http://kthjm.tumblr.com/post/173391616742/audio_player_iframe/kthjm/tumblr_p7v1vaZIIG1uzwbyj?audio_file=https%3A%2F%2Fwww.tumblr.com%2Faudio_file%2Fkthjm%2F173391616742%2Ftumblr_p7v1vaZIIG1uzwbyj\" frameborder=\"0\" allowtransparency=\"true\" scrolling=\"no\" width=\"540\" height=\"169\"></iframe>",
-      "audio-plays": 1282
+      "audio-plays": 1288
     },
     "common": {
       "id": "173258852467",

@@ -1,6 +1,5 @@
 import assert from 'assert'
 import rewire from 'rewire'
-import sinon from 'sinon'
 import { recursiveAddPostTillDone } from '../src/util.js'
 import * as v2 from '../rewired/v2.js'
 import * as v1 from '../rewired/v1.js'

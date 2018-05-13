@@ -79,6 +79,10 @@ var asserts = function asserts(condition, message) {
   return !condition && throws(message)
 }
 
+var paramFilter = function paramFilter(value) {
+  return Boolean(value) || typeof value === 'number'
+}
+
 var joinParams = function joinParams() {
   var params =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
@@ -102,10 +106,6 @@ var joinParams = function joinParams() {
           })
           .join('&')
     : ''
-}
-
-var paramFilter = function paramFilter(value) {
-  return Boolean(value) || typeof value === 'number'
 }
 
 var recursiveAddPostTillDone = function recursiveAddPostTillDone(feed) {
@@ -154,13 +154,15 @@ var postsToTags = function postsToTags(posts) {
 var API_URL = function API_URL(account) {
   return 'https://' + identifier(account) + '/api/read/json'
 }
-var MAX_INCREMENT = 50
+var MAX_LIMIT = 50
 
 var postTypes = ['quote', 'text', 'chat', 'photo', 'link', 'video', 'audio']
 
 var jsonpInterface = function jsonpInterface(account, params) {
   var timeout =
     arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5000
+
+  asserts(typeof account === 'string', 'required account')
 
   var _ref = params || {},
     start = _ref.start,
@@ -184,27 +186,25 @@ var jsonpInterface = function jsonpInterface(account, params) {
   )
 }
 
-var posts = function posts(account, params, timeout) {
-  return jsonpInterface(account, params, timeout).then(function(_ref2) {
-    var posts = _ref2.posts
+var blog = function blog(account, timeout) {
+  return jsonpInterface(account, { num: 0 }, timeout).then(function(_ref2) {
+    var tumblelog = _ref2.tumblelog
+    return tumblelog
+  })
+}
+
+var posts = function posts() {
+  return jsonpInterface.apply(undefined, arguments).then(function(_ref3) {
+    var posts = _ref3.posts
     return posts
   })
 }
 
-var post = function post(account, id, timeout) {
-  return jsonpInterface(account, { id: id }, timeout).then(function(_ref3) {
-    var posts = _ref3.posts
-    return posts[0]
-  })
-}
-
-var total = function total(account) {
-  var _ref4 =
-      arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+var total = function total(account, params, timeout) {
+  var _ref4 = params || {},
     type = _ref4.type,
     tag = _ref4.tag
 
-  var timeout = arguments[2]
   return jsonpInterface(
     account,
     { num: 0, type: type, tag: tag },
@@ -214,10 +214,11 @@ var total = function total(account) {
   })
 }
 
-var blog = function blog(account, timeout) {
-  return jsonpInterface(account, { num: 0 }, timeout).then(function(_ref5) {
-    var tumblelog = _ref5.tumblelog
-    return tumblelog
+var post = function post(account, id, timeout) {
+  asserts(typeof id === 'string' || typeof id === 'number', 'required id')
+  return jsonpInterface(account, { id: id }, timeout).then(function(_ref5) {
+    var posts = _ref5.posts
+    return posts[0]
   })
 }
 
@@ -231,11 +232,12 @@ var samplingPosts = async function samplingPosts() {
     account = _ref6.account,
     params = _ref6.params,
     denom = _ref6.denom,
-    maxNum = _ref6.maxNum
+    maxLimit = _ref6.maxLimit,
+    timeout = _ref6.timeout
 
   denom = denom || SAMPLING_DENOM
-  maxNum = maxNum || SAMPLING_MAX_NUM
-  asserts(maxNum <= MAX_INCREMENT, 'invalid maxNum')
+  maxLimit = maxLimit || SAMPLING_MAX_NUM
+  asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
 
   var _ref7 = params || {},
     type = _ref7.type,
@@ -255,13 +257,17 @@ var samplingPosts = async function samplingPosts() {
       random: true,
       promisify: true,
       yielded: function yielded(indexedArr) {
-        return posts(account, {
-          start: indexedArr[0],
-          num: indexedArr.length < maxNum ? indexedArr.length : maxNum,
-          type: type,
-          tag: tag,
-          filter: filter
-        })
+        return posts(
+          account,
+          {
+            start: indexedArr[0],
+            num: indexedArr.length < maxLimit ? indexedArr.length : maxLimit,
+            type: type,
+            tag: tag,
+            filter: filter
+          },
+          timeout
+        )
       }
     })
   )
@@ -272,7 +278,8 @@ var Timeline = async function Timeline() {
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     account = _ref8.account,
     random = _ref8.random,
-    params = _ref8.params
+    params = _ref8.params,
+    timeout = _ref8.timeout
 
   var _ref9 = params || {},
     _ref9$start = _ref9.start,
@@ -283,7 +290,7 @@ var Timeline = async function Timeline() {
     tag = _ref9.tag,
     filter = _ref9.filter
 
-  asserts(num <= MAX_INCREMENT, 'invalid num')
+  asserts(num <= MAX_LIMIT, 'invalid num')
 
   var length = await total(account, { type: type, tag: tag })
   asserts(start < length, 'invalid start')
@@ -294,22 +301,26 @@ var Timeline = async function Timeline() {
     random: random,
     promisify: true,
     yielded: function yielded(indexedArr) {
-      return posts(account, {
-        start: indexedArr[0] + start,
-        num: indexedArr.length,
-        type: type,
-        tag: tag,
-        filter: filter
-      })
+      return posts(
+        account,
+        {
+          start: indexedArr[0] + start,
+          num: indexedArr.length,
+          type: type,
+          tag: tag,
+          filter: filter
+        },
+        timeout
+      )
     }
   })
 }
 
 exports.postTypes = postTypes
-exports.posts = posts
-exports.post = post
-exports.total = total
 exports.blog = blog
+exports.posts = posts
+exports.total = total
+exports.post = post
 exports.samplingTags = samplingTags
 exports.samplingPosts = samplingPosts
 exports.Timeline = Timeline
