@@ -1,9 +1,9 @@
-import * as v2 from '../rewired/v2.js'
-import * as v1 from '../rewired/v1.js'
+import * as v2 from './rewired.v2.js'
+import * as v1 from './rewired.v1.js'
 import { outputJson } from 'fs-extra'
 import { join } from 'path'
 
-export const outpath = (type) => join(__dirname, `${type}.json`)
+export const outpath = (type) => join(__dirname, `snap.${type}.json`)
 export const account = 'kthjm'
 export const spaces = '  '
 

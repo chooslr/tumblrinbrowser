@@ -273,7 +273,7 @@ var samplingPosts = async function samplingPosts() {
   )
 }
 
-var Timeline = async function Timeline() {
+var generatePosts = async function generatePosts() {
   var _ref8 =
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     account = _ref8.account,
@@ -323,4 +323,4 @@ exports.total = total
 exports.post = post
 exports.samplingTags = samplingTags
 exports.samplingPosts = samplingPosts
-exports.Timeline = Timeline
+exports.generatePosts = generatePosts

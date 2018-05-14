@@ -1,10 +1,13 @@
-responses/
-rewired/
 src/
 test/
 .babelrc
 .gitignore
 .travis.yml
-rollup.config.js
-yarn.lock
 codecov.yml
+rewired.v1.js
+rewired.v2.js
+rollup.config.js
+snap.js
+snap.v1.json
+snap.v2.json
+yarn.lock

@@ -11,7 +11,8 @@ import {
 } from './util.js'
 
 const ORIGIN = 'https://api.tumblr.com'
-const API_URL = (account, proxy) => `${proxy || ORIGIN}/v2/blog/${identifier(account)}`
+const API_URL = (account, proxy) => `${proxy ? pathformat(proxy) : ORIGIN}/v2/blog/${identifier(account)}`
+const pathformat = (path) => path[path.length - 1] === '/' ? path.slice(0, path.length - 1) : path
 const MAX_LIMIT = 20
 const method = 'GET'
 const mode = 'cors'
@@ -137,7 +138,7 @@ export const samplingPosts = async ({ api_key, proxy, account, params, denom, ma
 }
 
 
-export const Timeline = async ({ api_key, proxy, account, random, params } = {}) => {
+export const generatePosts = async ({ api_key, proxy, account, random, params } = {}) => {
 
   const { offset = 0, limit = MAX_LIMIT, type, tag, reblog_info, notes_info, filter } = params || {}
   asserts(limit <= MAX_LIMIT, 'Posts > invalid limit')
@@ -201,8 +202,8 @@ export class Tumblr {
     return samplingTags({ api_key: this.api_key, proxy: this.proxy, account, params, denom, maxLimit })
   }
 
-  Timeline({ account, params, random } = {}) {
-    return Timeline({ api_key: this.api_key, proxy: this.proxy, account, params, random })
+  generatePosts({ account, params, random } = {}) {
+    return generatePosts({ api_key: this.api_key, proxy: this.proxy, account, params, random })
   }
 }
 

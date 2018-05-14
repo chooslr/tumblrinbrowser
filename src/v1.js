@@ -84,7 +84,7 @@ export const samplingPosts = async ({ account, params, denom, maxLimit, timeout 
 }
 
 
-export const Timeline = async ({ account, random, params, timeout } = {}) => {
+export const generatePosts = async ({ account, random, params, timeout } = {}) => {
 
   const { start = 0, num = 20, type, tag, filter } = params || {}
   asserts(num <= MAX_LIMIT, 'invalid num')

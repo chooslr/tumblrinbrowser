@@ -1,7 +1,6 @@
 import assert from 'assert'
-import rewire from 'rewire'
-import * as v2 from '../rewired/v2.js'
-import * as v1 from '../rewired/v1.js'
+import * as v2 from '../rewired.v2.js'
+import * as v1 from '../rewired.v1.js'
 
 const { CONSUMER_KEY: api_key } = process.env
 const account = 'staff'

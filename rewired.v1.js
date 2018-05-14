@@ -10,6 +10,6 @@ const jsonp = (src, timeout) =>
     return JSON.parse(jsonstring)
   })
 
-const modules = rewire('../src/v1.js')
+const modules = rewire('./src/v1.js')
 modules.__set__({ _jsonpSimple2: { default: jsonp } })
 module.exports = modules

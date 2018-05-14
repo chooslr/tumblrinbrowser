@@ -176,7 +176,12 @@ var postsToTags = function postsToTags(posts) {
 
 var ORIGIN = 'https://api.tumblr.com'
 var API_URL = function API_URL(account, proxy) {
-  return (proxy || ORIGIN) + '/v2/blog/' + identifier(account)
+  return (
+    (proxy ? pathformat(proxy) : ORIGIN) + '/v2/blog/' + identifier(account)
+  )
+}
+var pathformat = function pathformat(path) {
+  return path[path.length - 1] === '/' ? path.slice(0, path.length - 1) : path
 }
 var MAX_LIMIT = 20
 var method = 'GET'
@@ -405,7 +410,7 @@ var _samplingPosts = async function _samplingPosts() {
     })
   )
 }
-var _Timeline = async function _Timeline() {
+var _generatePosts = async function _generatePosts() {
   var _ref15 =
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     api_key = _ref15.api_key,
@@ -563,8 +568,8 @@ var Tumblr = (function() {
       }
     },
     {
-      key: 'Timeline',
-      value: function Timeline() {
+      key: 'generatePosts',
+      value: function generatePosts() {
         var _ref20 =
             arguments.length > 0 && arguments[0] !== undefined
               ? arguments[0]
@@ -573,7 +578,7 @@ var Tumblr = (function() {
           params = _ref20.params,
           random = _ref20.random
 
-        return _Timeline({
+        return _generatePosts({
           api_key: this.api_key,
           proxy: this.proxy,
           account: account,
@@ -595,6 +600,6 @@ exports.total = _total
 exports.post = _post
 exports.samplingTags = _samplingTags
 exports.samplingPosts = _samplingPosts
-exports.Timeline = _Timeline
+exports.generatePosts = _generatePosts
 exports.Tumblr = Tumblr
 exports.default = Tumblr

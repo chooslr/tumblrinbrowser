@@ -5,13 +5,19 @@
 [![Build Status](https://img.shields.io/travis/kthjm/tumblrinbrowser.svg?style=flat-square)](https://travis-ci.org/kthjm/tumblrinbrowser)
 [![Coverage Status](https://img.shields.io/codecov/c/github/kthjm/tumblrinbrowser.svg?style=flat-square)](https://codecov.io/github/kthjm/tumblrinbrowser)
 
-[tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
+> [tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
+>
 > Due to CORS restrictions, you're going to have a really hard time using this library in the browser. Although GET endpoints on the Tumblr API support JSONP, this library is not intended for in-browser use. Sorry!
 
 The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser.
 
 - [`window.tumblrV2`](https://cdn.jsdelivr.net/npm/tumblrinbrowser/v2/min.js)
 - [`window.tumblrV1`](https://cdn.jsdelivr.net/npm/tumblrinbrowser/v1/min.js)
+
+## Installation
+```shell
+yarn add tumblrinbrowser
+```
 
 ## v2
 ```js
@@ -58,18 +64,18 @@ result: `Promise<Post[]>` / `Promise<Tag[]>`
 - `maxLimit`
 - `params`
 
-#### `.Timeline(options)`
-result: `Promise<TimelineFn>`
+#### `.generatePosts(options)`
+```js
+const supply = await tumblr.generatePosts({ account })
+const { done, value: posts } = await supply()
+const { done, value: posts } = await supply()
+```
+result: `Promise<SupplyFn>` ([`tiloop`](https://github.com/kthjm/tiloop)'s)
 ##### options
 - `account`
 - `random`
 - `params`
 
-```js
-const timeline = await tumblr.Timeline({ account })
-const { done, value: posts } = await timeline()
-const { done, value: posts } = await timeline()
-```
 
 ### modules
 ```js
@@ -85,7 +91,7 @@ const post = await v2.post({ api_key, proxy, account, id, params })
 const posts = await v2.samplingPosts({ api_key, proxy, account, denom, maxLimit, params })
 const tags = await v2.samplingTags({ api_key, proxy, account, denom, maxLimit, params })
 
-const timeline = await v2.Timeline({ api_key, proxy, account, random, params })
+const supply = await v2.generatePosts({ api_key, proxy, account, random, params })
 ```
 
 ## v1
@@ -100,7 +106,7 @@ const post = await v1.post(account, id[, params, timeout])
 const posts = await v1.samplingPosts({ account, params, denom, maxLimit, timeout })
 const tags = await v1.samplingTags({ account, params, denom, maxLimit, timeout })
 
-const timeline = await v1.Timeline({ account, params, random, timeout })
+const supply = await v1.generatePosts({ account, params, random, timeout })
 ```
 
 ## License
