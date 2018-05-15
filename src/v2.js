@@ -1,3 +1,4 @@
+import regeneratorRuntime from 'regenerator-runtime'
 import tiloop from 'tiloop'
 import {
   identifier,
@@ -11,7 +12,7 @@ import {
 } from './util.js'
 
 const ORIGIN = 'https://api.tumblr.com'
-const API_URL = (account, proxy) => `${proxy ? pathformat(proxy) : ORIGIN}/v2/blog/${identifier(account)}`
+const API_URL = (name, proxy) => `${proxy ? pathformat(proxy) : ORIGIN}/v2/blog/${identifier(name)}`
 const pathformat = (path) => path[path.length - 1] === '/' ? path.slice(0, path.length - 1) : path
 const MAX_LIMIT = 20
 const method = 'GET'
@@ -21,7 +22,7 @@ export const postTypes = ['quote', 'text', 'chat', 'photo', 'link', 'video', 'au
 
 export const avatarSizes = [16, 24, 30, 40, 48, 64, 96, 128, 512]
 
-export const avatar = (account, size = 64) => `${API_URL(account)}/avatar/${size}`
+export const avatar = (name, size = 64) => `${API_URL(name)}/avatar/${size}`
 
 const isSuccess = status => status === 200 || status === 201
 
@@ -44,32 +45,32 @@ const requireAssert = (api_key, proxy) =>
     'required api_key || proxy'
   )
 
-const accountAssert = (account) =>
+const nameAssert = (name) =>
   asserts(
-    typeof account === 'string',
-    'required account'
+    typeof name === 'string',
+    'required name'
   )
 
-const postsInterface = ({ api_key, proxy, account, params } = {}) => {
+const postsInterface = ({ api_key, proxy, name, params } = {}) => {
 
   requireAssert(api_key, proxy)
-  accountAssert(account)
+  nameAssert(name)
 
   const { type, tag, id, limit, offset, reblog_info, notes_info, filter } = params || {}
 
   return fetchInterface(
-    `${API_URL(account, proxy)}/posts` + joinParams({ api_key, type, tag, id, limit, offset, reblog_info, notes_info, filter }),
+    `${API_URL(name, proxy)}/posts` + joinParams({ api_key, type, tag, id, limit, offset, reblog_info, notes_info, filter }),
     { method, mode }
   )
 }
 
-const infoInterface = ({ api_key, proxy, account } = {}) => {
+const infoInterface = ({ api_key, proxy, name } = {}) => {
 
   requireAssert(api_key, proxy)
-  accountAssert(account)
+  nameAssert(name)
 
   return fetchInterface(
-    `${API_URL(account, proxy)}/info` + joinParams({ api_key }),
+    `${API_URL(name, proxy)}/info` + joinParams({ api_key }),
     { method, mode }
   )
 }
@@ -82,23 +83,23 @@ export const posts = (options) =>
   postsInterface(options)
   .then(({ posts }) => posts)
 
-export const total = ({ api_key, proxy, account, params } = {}) => {
+export const total = ({ api_key, proxy, name, params } = {}) => {
   const { type, tag } = params || {}
-  return postsInterface({ api_key, proxy, account, params: { limit: 1, type, tag } })
+  return postsInterface({ api_key, proxy, name, params: { limit: 1, type, tag } })
   .then(({ total_posts }) => total_posts)
 }
 
-export const post = ({ api_key, proxy, account, id, params } = {}) => {
+export const post = ({ api_key, proxy, name, id, params } = {}) => {
   asserts(typeof id === 'string' || typeof id === 'number', 'required id')
   const { reblog_info, notes_info } = params || {}
-  return postsInterface({ api_key, proxy, account, params: { id, reblog_info, notes_info } })
+  return postsInterface({ api_key, proxy, name, params: { id, reblog_info, notes_info } })
   .then(({ posts }) => posts[0])
 }
 
 
 export const samplingTags = (options) => samplingPosts(options).then(postsToTags)
 
-export const samplingPosts = async ({ api_key, proxy, account, params, denom, maxLimit } = {}) => {
+export const samplingPosts = async ({ api_key, proxy, name, params, denom, maxLimit } = {}) => {
 
   denom = denom || SAMPLING_DENOM
   maxLimit = maxLimit || SAMPLING_MAX_NUM
@@ -106,8 +107,8 @@ export const samplingPosts = async ({ api_key, proxy, account, params, denom, ma
 
   const { type, tag, reblog_info, notes_info, filter } = params || {}
 
-  const length = await total({ api_key, proxy, account, params: { type, tag } })
-  asserts(length > 0, 'sampling account has no posts')
+  const length = await total({ api_key, proxy, name, params: { type, tag } })
+  asserts(length > 0, 'sampling name has no posts')
 
   const maxIncrement = Math.floor(length / denom)
   asserts(maxIncrement > 0, 'invalid denom')
@@ -122,7 +123,7 @@ export const samplingPosts = async ({ api_key, proxy, account, params, denom, ma
         posts({
           api_key,
           proxy,
-          account,
+          name,
           params: {
             offset: indexedArr[0],
             limit: indexedArr.length < maxLimit ? indexedArr.length : maxLimit,
@@ -138,12 +139,12 @@ export const samplingPosts = async ({ api_key, proxy, account, params, denom, ma
 }
 
 
-export const generatePosts = async ({ api_key, proxy, account, random, params } = {}) => {
+export const generatePosts = async ({ api_key, proxy, name, random, params } = {}) => {
 
   const { offset = 0, limit = MAX_LIMIT, type, tag, reblog_info, notes_info, filter } = params || {}
   asserts(limit <= MAX_LIMIT, 'Posts > invalid limit')
 
-  const length = await total({ api_key, proxy, account, params: { type, tag } })
+  const length = await total({ api_key, proxy, name, params: { type, tag } })
   asserts(offset < length, 'Posts > invalid offset')
 
   return tiloop({
@@ -155,7 +156,7 @@ export const generatePosts = async ({ api_key, proxy, account, random, params } 
       posts({
         api_key,
         proxy,
-        account,
+        name,
         params: {
           offset: indexedArr[0] + offset,
           limit: indexedArr.length,
@@ -178,32 +179,32 @@ export class Tumblr {
     this.proxy = proxy
   }
 
-  blog(account) {
-    return blog({ api_key: this.api_key, proxy: this.proxy, account })
+  blog(name) {
+    return blog({ api_key: this.api_key, proxy: this.proxy, name })
   }
 
-  posts(account, params) {
-    return posts({ api_key: this.api_key, proxy: this.proxy, account, params })
+  posts(name, params) {
+    return posts({ api_key: this.api_key, proxy: this.proxy, name, params })
   }
 
-  total(account, params) {
-    return total({ api_key: this.api_key, proxy: this.proxy, account, params })
+  total(name, params) {
+    return total({ api_key: this.api_key, proxy: this.proxy, name, params })
   }
 
-  post(account, id, params) {
-    return post({ api_key: this.api_key, proxy: this.proxy, account, id, params })
+  post(name, id, params) {
+    return post({ api_key: this.api_key, proxy: this.proxy, name, id, params })
   }
 
-  samplingPosts({ account, params, denom, maxLimit } = {}) {
-    return samplingPosts({ api_key: this.api_key, proxy: this.proxy, account, params, denom, maxLimit })
+  samplingPosts({ name, params, denom, maxLimit } = {}) {
+    return samplingPosts({ api_key: this.api_key, proxy: this.proxy, name, params, denom, maxLimit })
   }
 
-  samplingTags({ account, params, denom, maxLimit, proxy } = {}) {
-    return samplingTags({ api_key: this.api_key, proxy: this.proxy, account, params, denom, maxLimit })
+  samplingTags({ name, params, denom, maxLimit, proxy } = {}) {
+    return samplingTags({ api_key: this.api_key, proxy: this.proxy, name, params, denom, maxLimit })
   }
 
-  generatePosts({ account, params, random } = {}) {
-    return generatePosts({ api_key: this.api_key, proxy: this.proxy, account, params, random })
+  generatePosts({ name, params, random } = {}) {
+    return generatePosts({ api_key: this.api_key, proxy: this.proxy, name, params, random })
   }
 }
 

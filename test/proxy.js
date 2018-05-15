@@ -8,15 +8,15 @@ const endpoint = '/proxypoint'
 
 describe('proxy', () => {
   const tumblr = new Tumblr({ proxy: `http://localhost:${port}${endpoint}` })
-  const account = 'staff'
+  const name = 'staff'
 
-  it('blog()', () => tumblr.blog(account))
-  it('posts()', () => tumblr.posts(account, { type: 'quote' }))
-  it('total()', () => tumblr.total(account, { type: 'text' }))
-  it('post()', () => tumblr.post(account, 99671967250))
-  it('samplingPosts()', () => tumblr.samplingPosts({ account }))
-  it('samplingTags()', () => tumblr.samplingTags({ account }))
-  it('generatePosts()', () => tumblr.generatePosts({ account }))
+  it('blog()', () => tumblr.blog(name))
+  it('posts()', () => tumblr.posts(name, { type: 'quote' }))
+  it('total()', () => tumblr.total(name, { type: 'text' }))
+  it('post()', () => tumblr.post(name, 99671967250))
+  it('samplingPosts()', () => tumblr.samplingPosts({ name }))
+  it('samplingTags()', () => tumblr.samplingTags({ name }))
+  it('generatePosts()', () => tumblr.generatePosts({ name }))
 })
 
 let server

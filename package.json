@@ -1,6 +1,6 @@
 {
   "name": "tumblrinbrowser",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "kthjm <toxictoxer@gmail.com>",
   "repository": "kthjm/tumblrinbrowser",
   "license": "MIT",
@@ -35,14 +35,15 @@
   },
   "dependencies": {
     "jsonp-simple": "^0.0.5",
+    "regenerator-runtime": "^0.11.1",
     "tiloop": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-power-assert": "^2.0.0",
     "codecov": "^3.0.0",
     "cross-env": "^5.1.3",

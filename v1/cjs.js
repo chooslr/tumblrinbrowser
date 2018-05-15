@@ -6,8 +6,41 @@ function _interopDefault(ex) {
   return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
 }
 
+var regeneratorRuntime = _interopDefault(require('regenerator-runtime'))
 var jsonp = _interopDefault(require('jsonp-simple'))
 var tiloop = _interopDefault(require('tiloop'))
+
+var asyncToGenerator = function(fn) {
+  return function() {
+    var gen = fn.apply(this, arguments)
+    return new Promise(function(resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg)
+          var value = info.value
+        } catch (error) {
+          reject(error)
+          return
+        }
+
+        if (info.done) {
+          resolve(value)
+        } else {
+          return Promise.resolve(value).then(
+            function(value) {
+              step('next', value)
+            },
+            function(err) {
+              step('throw', err)
+            }
+          )
+        }
+      }
+
+      return step('next')
+    })
+  }
+}
 
 var slicedToArray = (function() {
   function sliceIterator(arr, i) {
@@ -67,8 +100,8 @@ var toConsumableArray = function(arr) {
 var SAMPLING_DENOM = 4
 var SAMPLING_MAX_NUM = 3
 
-var identifier = function identifier(account) {
-  return account + '.tumblr.com'
+var identifier = function identifier(name) {
+  return name + '.tumblr.com'
 }
 
 var throws = function throws(message) {
@@ -151,18 +184,20 @@ var postsToTags = function postsToTags(posts) {
   )
 }
 
-var API_URL = function API_URL(account) {
-  return 'https://' + identifier(account) + '/api/read/json'
+var _this = undefined
+
+var API_URL = function API_URL(name) {
+  return 'https://' + identifier(name) + '/api/read/json'
 }
 var MAX_LIMIT = 50
 
 var postTypes = ['quote', 'text', 'chat', 'photo', 'link', 'video', 'audio']
 
-var jsonpInterface = function jsonpInterface(account, params) {
+var jsonpInterface = function jsonpInterface(name, params) {
   var timeout =
     arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5000
 
-  asserts(typeof account === 'string', 'required account')
+  asserts(typeof name === 'string', 'required name')
 
   var _ref = params || {},
     start = _ref.start,
@@ -173,7 +208,7 @@ var jsonpInterface = function jsonpInterface(account, params) {
     filter = _ref.filter
 
   return jsonp(
-    API_URL(account) +
+    API_URL(name) +
       joinParams({
         start: start,
         num: num,
@@ -186,8 +221,8 @@ var jsonpInterface = function jsonpInterface(account, params) {
   )
 }
 
-var blog = function blog(account, timeout) {
-  return jsonpInterface(account, { num: 0 }, timeout).then(function(_ref2) {
+var blog = function blog(name, timeout) {
+  return jsonpInterface(name, { num: 0 }, timeout).then(function(_ref2) {
     var tumblelog = _ref2.tumblelog
     return tumblelog
   })
@@ -200,23 +235,21 @@ var posts = function posts() {
   })
 }
 
-var total = function total(account, params, timeout) {
+var total = function total(name, params, timeout) {
   var _ref4 = params || {},
     type = _ref4.type,
     tag = _ref4.tag
 
-  return jsonpInterface(
-    account,
-    { num: 0, type: type, tag: tag },
-    timeout
-  ).then(function(res) {
-    return +res['posts-total']
-  })
+  return jsonpInterface(name, { num: 0, type: type, tag: tag }, timeout).then(
+    function(res) {
+      return +res['posts-total']
+    }
+  )
 }
 
-var post = function post(account, id, timeout) {
+var post = function post(name, id, timeout) {
   asserts(typeof id === 'string' || typeof id === 'number', 'required id')
-  return jsonpInterface(account, { id: id }, timeout).then(function(_ref5) {
+  return jsonpInterface(name, { id: id }, timeout).then(function(_ref5) {
     var posts = _ref5.posts
     return posts[0]
   })
@@ -226,95 +259,176 @@ var samplingTags = function samplingTags() {
   return samplingPosts.apply(undefined, arguments).then(postsToTags)
 }
 
-var samplingPosts = async function samplingPosts() {
-  var _ref6 =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    account = _ref6.account,
-    params = _ref6.params,
-    denom = _ref6.denom,
-    maxLimit = _ref6.maxLimit,
-    timeout = _ref6.timeout
+var samplingPosts = (function() {
+  var _ref6 = asyncToGenerator(
+    /*#__PURE__*/ regeneratorRuntime.mark(function _callee() {
+      var _ref7 =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : {},
+        name = _ref7.name,
+        params = _ref7.params,
+        denom = _ref7.denom,
+        maxLimit = _ref7.maxLimit,
+        timeout = _ref7.timeout
 
-  denom = denom || SAMPLING_DENOM
-  maxLimit = maxLimit || SAMPLING_MAX_NUM
-  asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
+      var _ref8, type, tag, filter, length, maxIncrement
 
-  var _ref7 = params || {},
-    type = _ref7.type,
-    tag = _ref7.tag,
-    filter = _ref7.filter
+      return regeneratorRuntime.wrap(
+        function _callee$(_context) {
+          while (1) {
+            switch ((_context.prev = _context.next)) {
+              case 0:
+                denom = denom || SAMPLING_DENOM
+                maxLimit = maxLimit || SAMPLING_MAX_NUM
+                asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
 
-  var length = await total(account, { type: type, tag: tag })
-  asserts(length > 0, 'sampling account has no posts')
+                ;(_ref8 = params || {}),
+                  (type = _ref8.type),
+                  (tag = _ref8.tag),
+                  (filter = _ref8.filter)
+                _context.next = 6
+                return total(name, { type: type, tag: tag })
 
-  var maxIncrement = Math.floor(length / denom)
-  asserts(maxIncrement > 0, 'invalid denom')
+              case 6:
+                length = _context.sent
 
-  return recursiveAddPostTillDone(
-    tiloop({
-      length: length,
-      maxIncrement: maxIncrement,
-      random: true,
-      promisify: true,
-      yielded: function yielded(indexedArr) {
-        return posts(
-          account,
-          {
-            start: indexedArr[0],
-            num: indexedArr.length < maxLimit ? indexedArr.length : maxLimit,
-            type: type,
-            tag: tag,
-            filter: filter
-          },
-          timeout
-        )
-      }
+                asserts(length > 0, 'sampling name has no posts')
+
+                maxIncrement = Math.floor(length / denom)
+
+                asserts(maxIncrement > 0, 'invalid denom')
+
+                return _context.abrupt(
+                  'return',
+                  recursiveAddPostTillDone(
+                    tiloop({
+                      length: length,
+                      maxIncrement: maxIncrement,
+                      random: true,
+                      promisify: true,
+                      yielded: function yielded(indexedArr) {
+                        return posts(
+                          name,
+                          {
+                            start: indexedArr[0],
+                            num:
+                              indexedArr.length < maxLimit
+                                ? indexedArr.length
+                                : maxLimit,
+                            type: type,
+                            tag: tag,
+                            filter: filter
+                          },
+                          timeout
+                        )
+                      }
+                    })
+                  )
+                )
+
+              case 11:
+              case 'end':
+                return _context.stop()
+            }
+          }
+        },
+        _callee,
+        _this
+      )
     })
   )
-}
 
-var generatePosts = async function generatePosts() {
-  var _ref8 =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    account = _ref8.account,
-    random = _ref8.random,
-    params = _ref8.params,
-    timeout = _ref8.timeout
+  return function samplingPosts() {
+    return _ref6.apply(this, arguments)
+  }
+})()
 
-  var _ref9 = params || {},
-    _ref9$start = _ref9.start,
-    start = _ref9$start === undefined ? 0 : _ref9$start,
-    _ref9$num = _ref9.num,
-    num = _ref9$num === undefined ? 20 : _ref9$num,
-    type = _ref9.type,
-    tag = _ref9.tag,
-    filter = _ref9.filter
+var generatePosts = (function() {
+  var _ref9 = asyncToGenerator(
+    /*#__PURE__*/ regeneratorRuntime.mark(function _callee2() {
+      var _ref10 =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : {},
+        name = _ref10.name,
+        random = _ref10.random,
+        params = _ref10.params,
+        timeout = _ref10.timeout
 
-  asserts(num <= MAX_LIMIT, 'invalid num')
+      var _ref11,
+        _ref11$start,
+        start,
+        _ref11$num,
+        num,
+        type,
+        tag,
+        filter,
+        length
 
-  var length = await total(account, { type: type, tag: tag })
-  asserts(start < length, 'invalid start')
+      return regeneratorRuntime.wrap(
+        function _callee2$(_context2) {
+          while (1) {
+            switch ((_context2.prev = _context2.next)) {
+              case 0:
+                ;(_ref11 = params || {}),
+                  (_ref11$start = _ref11.start),
+                  (start = _ref11$start === undefined ? 0 : _ref11$start),
+                  (_ref11$num = _ref11.num),
+                  (num = _ref11$num === undefined ? 20 : _ref11$num),
+                  (type = _ref11.type),
+                  (tag = _ref11.tag),
+                  (filter = _ref11.filter)
 
-  return tiloop({
-    length: length - start,
-    maxIncrement: num,
-    random: random,
-    promisify: true,
-    yielded: function yielded(indexedArr) {
-      return posts(
-        account,
-        {
-          start: indexedArr[0] + start,
-          num: indexedArr.length,
-          type: type,
-          tag: tag,
-          filter: filter
+                asserts(num <= MAX_LIMIT, 'invalid num')
+
+                _context2.next = 4
+                return total(name, { type: type, tag: tag })
+
+              case 4:
+                length = _context2.sent
+
+                asserts(start < length, 'invalid start')
+
+                return _context2.abrupt(
+                  'return',
+                  tiloop({
+                    length: length - start,
+                    maxIncrement: num,
+                    random: random,
+                    promisify: true,
+                    yielded: function yielded(indexedArr) {
+                      return posts(
+                        name,
+                        {
+                          start: indexedArr[0] + start,
+                          num: indexedArr.length,
+                          type: type,
+                          tag: tag,
+                          filter: filter
+                        },
+                        timeout
+                      )
+                    }
+                  })
+                )
+
+              case 7:
+              case 'end':
+                return _context2.stop()
+            }
+          }
         },
-        timeout
+        _callee2,
+        _this
       )
-    }
-  })
-}
+    })
+  )
+
+  return function generatePosts() {
+    return _ref9.apply(this, arguments)
+  }
+})()
 
 exports.postTypes = postTypes
 exports.blog = blog

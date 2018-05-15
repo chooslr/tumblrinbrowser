@@ -6,7 +6,40 @@ function _interopDefault(ex) {
   return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
 }
 
+var regeneratorRuntime = _interopDefault(require('regenerator-runtime'))
 var tiloop = _interopDefault(require('tiloop'))
+
+var asyncToGenerator = function(fn) {
+  return function() {
+    var gen = fn.apply(this, arguments)
+    return new Promise(function(resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg)
+          var value = info.value
+        } catch (error) {
+          reject(error)
+          return
+        }
+
+        if (info.done) {
+          resolve(value)
+        } else {
+          return Promise.resolve(value).then(
+            function(value) {
+              step('next', value)
+            },
+            function(err) {
+              step('throw', err)
+            }
+          )
+        }
+      }
+
+      return step('next')
+    })
+  }
+}
 
 var classCallCheck = function(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -90,8 +123,8 @@ var toConsumableArray = function(arr) {
 var SAMPLING_DENOM = 4
 var SAMPLING_MAX_NUM = 3
 
-var identifier = function identifier(account) {
-  return account + '.tumblr.com'
+var identifier = function identifier(name) {
+  return name + '.tumblr.com'
 }
 
 var throws = function throws(message) {
@@ -174,11 +207,11 @@ var postsToTags = function postsToTags(posts) {
   )
 }
 
+var _this = undefined
+
 var ORIGIN = 'https://api.tumblr.com'
-var API_URL = function API_URL(account, proxy) {
-  return (
-    (proxy ? pathformat(proxy) : ORIGIN) + '/v2/blog/' + identifier(account)
-  )
+var API_URL = function API_URL(name, proxy) {
+  return (proxy ? pathformat(proxy) : ORIGIN) + '/v2/blog/' + identifier(name)
 }
 var pathformat = function pathformat(path) {
   return path[path.length - 1] === '/' ? path.slice(0, path.length - 1) : path
@@ -200,10 +233,10 @@ var postTypes = [
 
 var avatarSizes = [16, 24, 30, 40, 48, 64, 96, 128, 512]
 
-var avatar = function avatar(account) {
+var avatar = function avatar(name) {
   var size =
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 64
-  return API_URL(account) + '/avatar/' + size
+  return API_URL(name) + '/avatar/' + size
 }
 
 var isSuccess = function isSuccess(status) {
@@ -232,8 +265,8 @@ var requireAssert = function requireAssert(api_key, proxy) {
   )
 }
 
-var accountAssert = function accountAssert(account) {
-  return asserts(typeof account === 'string', 'required account')
+var nameAssert = function nameAssert(name) {
+  return asserts(typeof name === 'string', 'required name')
 }
 
 var postsInterface = function postsInterface() {
@@ -241,11 +274,11 @@ var postsInterface = function postsInterface() {
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     api_key = _ref2.api_key,
     proxy = _ref2.proxy,
-    account = _ref2.account,
+    name = _ref2.name,
     params = _ref2.params
 
   requireAssert(api_key, proxy)
-  accountAssert(account)
+  nameAssert(name)
 
   var _ref3 = params || {},
     type = _ref3.type,
@@ -258,7 +291,7 @@ var postsInterface = function postsInterface() {
     filter = _ref3.filter
 
   return fetchInterface(
-    API_URL(account, proxy) +
+    API_URL(name, proxy) +
       '/posts' +
       joinParams({
         api_key: api_key,
@@ -280,13 +313,13 @@ var infoInterface = function infoInterface() {
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     api_key = _ref4.api_key,
     proxy = _ref4.proxy,
-    account = _ref4.account
+    name = _ref4.name
 
   requireAssert(api_key, proxy)
-  accountAssert(account)
+  nameAssert(name)
 
   return fetchInterface(
-    API_URL(account, proxy) + '/info' + joinParams({ api_key: api_key }),
+    API_URL(name, proxy) + '/info' + joinParams({ api_key: api_key }),
     { method: method, mode: mode }
   )
 }
@@ -308,7 +341,7 @@ var _total = function _total() {
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     api_key = _ref7.api_key,
     proxy = _ref7.proxy,
-    account = _ref7.account,
+    name = _ref7.name,
     params = _ref7.params
 
   var _ref8 = params || {},
@@ -318,7 +351,7 @@ var _total = function _total() {
   return postsInterface({
     api_key: api_key,
     proxy: proxy,
-    account: account,
+    name: name,
     params: { limit: 1, type: type, tag: tag }
   }).then(function(_ref9) {
     var total_posts = _ref9.total_posts
@@ -330,7 +363,7 @@ var _post = function _post() {
       arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     api_key = _ref10.api_key,
     proxy = _ref10.proxy,
-    account = _ref10.account,
+    name = _ref10.name,
     id = _ref10.id,
     params = _ref10.params
 
@@ -343,7 +376,7 @@ var _post = function _post() {
   return postsInterface({
     api_key: api_key,
     proxy: proxy,
-    account: account,
+    name: name,
     params: { id: id, reblog_info: reblog_info, notes_info: notes_info }
   }).then(function(_ref12) {
     var posts = _ref12.posts
@@ -353,122 +386,213 @@ var _post = function _post() {
 var _samplingTags = function _samplingTags(options) {
   return _samplingPosts(options).then(postsToTags)
 }
-var _samplingPosts = async function _samplingPosts() {
-  var _ref13 =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    api_key = _ref13.api_key,
-    proxy = _ref13.proxy,
-    account = _ref13.account,
-    params = _ref13.params,
-    denom = _ref13.denom,
-    maxLimit = _ref13.maxLimit
+var _samplingPosts = (function() {
+  var _ref13 = asyncToGenerator(
+    /*#__PURE__*/ regeneratorRuntime.mark(function _callee() {
+      var _ref14 =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : {},
+        api_key = _ref14.api_key,
+        proxy = _ref14.proxy,
+        name = _ref14.name,
+        params = _ref14.params,
+        denom = _ref14.denom,
+        maxLimit = _ref14.maxLimit
 
-  denom = denom || SAMPLING_DENOM
-  maxLimit = maxLimit || SAMPLING_MAX_NUM
-  asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
+      var _ref15,
+        type,
+        tag,
+        reblog_info,
+        notes_info,
+        filter,
+        length,
+        maxIncrement
 
-  var _ref14 = params || {},
-    type = _ref14.type,
-    tag = _ref14.tag,
-    reblog_info = _ref14.reblog_info,
-    notes_info = _ref14.notes_info,
-    filter = _ref14.filter
+      return regeneratorRuntime.wrap(
+        function _callee$(_context) {
+          while (1) {
+            switch ((_context.prev = _context.next)) {
+              case 0:
+                denom = denom || SAMPLING_DENOM
+                maxLimit = maxLimit || SAMPLING_MAX_NUM
+                asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
 
-  var length = await _total({
-    api_key: api_key,
-    proxy: proxy,
-    account: account,
-    params: { type: type, tag: tag }
-  })
-  asserts(length > 0, 'sampling account has no posts')
+                ;(_ref15 = params || {}),
+                  (type = _ref15.type),
+                  (tag = _ref15.tag),
+                  (reblog_info = _ref15.reblog_info),
+                  (notes_info = _ref15.notes_info),
+                  (filter = _ref15.filter)
+                _context.next = 6
+                return _total({
+                  api_key: api_key,
+                  proxy: proxy,
+                  name: name,
+                  params: { type: type, tag: tag }
+                })
 
-  var maxIncrement = Math.floor(length / denom)
-  asserts(maxIncrement > 0, 'invalid denom')
+              case 6:
+                length = _context.sent
 
-  return recursiveAddPostTillDone(
-    tiloop({
-      length: length,
-      maxIncrement: maxIncrement,
-      random: true,
-      promisify: true,
-      yielded: function yielded(indexedArr) {
-        return _posts({
-          api_key: api_key,
-          proxy: proxy,
-          account: account,
-          params: {
-            offset: indexedArr[0],
-            limit: indexedArr.length < maxLimit ? indexedArr.length : maxLimit,
-            type: type,
-            tag: tag,
-            reblog_info: reblog_info,
-            notes_info: notes_info,
-            filter: filter
+                asserts(length > 0, 'sampling name has no posts')
+
+                maxIncrement = Math.floor(length / denom)
+
+                asserts(maxIncrement > 0, 'invalid denom')
+
+                return _context.abrupt(
+                  'return',
+                  recursiveAddPostTillDone(
+                    tiloop({
+                      length: length,
+                      maxIncrement: maxIncrement,
+                      random: true,
+                      promisify: true,
+                      yielded: function yielded(indexedArr) {
+                        return _posts({
+                          api_key: api_key,
+                          proxy: proxy,
+                          name: name,
+                          params: {
+                            offset: indexedArr[0],
+                            limit:
+                              indexedArr.length < maxLimit
+                                ? indexedArr.length
+                                : maxLimit,
+                            type: type,
+                            tag: tag,
+                            reblog_info: reblog_info,
+                            notes_info: notes_info,
+                            filter: filter
+                          }
+                        })
+                      }
+                    })
+                  )
+                )
+
+              case 11:
+              case 'end':
+                return _context.stop()
+            }
           }
-        })
-      }
+        },
+        _callee,
+        _this
+      )
     })
   )
-}
-var _generatePosts = async function _generatePosts() {
-  var _ref15 =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    api_key = _ref15.api_key,
-    proxy = _ref15.proxy,
-    account = _ref15.account,
-    random = _ref15.random,
-    params = _ref15.params
 
-  var _ref16 = params || {},
-    _ref16$offset = _ref16.offset,
-    offset = _ref16$offset === undefined ? 0 : _ref16$offset,
-    _ref16$limit = _ref16.limit,
-    limit = _ref16$limit === undefined ? MAX_LIMIT : _ref16$limit,
-    type = _ref16.type,
-    tag = _ref16.tag,
-    reblog_info = _ref16.reblog_info,
-    notes_info = _ref16.notes_info,
-    filter = _ref16.filter
+  return function _samplingPosts() {
+    return _ref13.apply(this, arguments)
+  }
+})()
+var _generatePosts = (function() {
+  var _ref16 = asyncToGenerator(
+    /*#__PURE__*/ regeneratorRuntime.mark(function _callee2() {
+      var _ref17 =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : {},
+        api_key = _ref17.api_key,
+        proxy = _ref17.proxy,
+        name = _ref17.name,
+        random = _ref17.random,
+        params = _ref17.params
 
-  asserts(limit <= MAX_LIMIT, 'Posts > invalid limit')
+      var _ref18,
+        _ref18$offset,
+        offset,
+        _ref18$limit,
+        limit,
+        type,
+        tag,
+        reblog_info,
+        notes_info,
+        filter,
+        length
 
-  var length = await _total({
-    api_key: api_key,
-    proxy: proxy,
-    account: account,
-    params: { type: type, tag: tag }
-  })
-  asserts(offset < length, 'Posts > invalid offset')
+      return regeneratorRuntime.wrap(
+        function _callee2$(_context2) {
+          while (1) {
+            switch ((_context2.prev = _context2.next)) {
+              case 0:
+                ;(_ref18 = params || {}),
+                  (_ref18$offset = _ref18.offset),
+                  (offset = _ref18$offset === undefined ? 0 : _ref18$offset),
+                  (_ref18$limit = _ref18.limit),
+                  (limit =
+                    _ref18$limit === undefined ? MAX_LIMIT : _ref18$limit),
+                  (type = _ref18.type),
+                  (tag = _ref18.tag),
+                  (reblog_info = _ref18.reblog_info),
+                  (notes_info = _ref18.notes_info),
+                  (filter = _ref18.filter)
 
-  return tiloop({
-    length: length - offset,
-    maxIncrement: limit,
-    random: random,
-    promisify: true,
-    yielded: function yielded(indexedArr) {
-      return _posts({
-        api_key: api_key,
-        proxy: proxy,
-        account: account,
-        params: {
-          offset: indexedArr[0] + offset,
-          limit: indexedArr.length,
-          type: type,
-          tag: tag,
-          reblog_info: reblog_info,
-          notes_info: notes_info,
-          filter: filter
-        }
-      })
-    }
-  })
-}
+                asserts(limit <= MAX_LIMIT, 'Posts > invalid limit')
+
+                _context2.next = 4
+                return _total({
+                  api_key: api_key,
+                  proxy: proxy,
+                  name: name,
+                  params: { type: type, tag: tag }
+                })
+
+              case 4:
+                length = _context2.sent
+
+                asserts(offset < length, 'Posts > invalid offset')
+
+                return _context2.abrupt(
+                  'return',
+                  tiloop({
+                    length: length - offset,
+                    maxIncrement: limit,
+                    random: random,
+                    promisify: true,
+                    yielded: function yielded(indexedArr) {
+                      return _posts({
+                        api_key: api_key,
+                        proxy: proxy,
+                        name: name,
+                        params: {
+                          offset: indexedArr[0] + offset,
+                          limit: indexedArr.length,
+                          type: type,
+                          tag: tag,
+                          reblog_info: reblog_info,
+                          notes_info: notes_info,
+                          filter: filter
+                        }
+                      })
+                    }
+                  })
+                )
+
+              case 7:
+              case 'end':
+                return _context2.stop()
+            }
+          }
+        },
+        _callee2,
+        _this
+      )
+    })
+  )
+
+  return function _generatePosts() {
+    return _ref16.apply(this, arguments)
+  }
+})()
 var Tumblr = (function() {
   function Tumblr() {
-    var _ref17 =
+    var _ref19 =
         arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      api_key = _ref17.api_key,
-      proxy = _ref17.proxy
+      api_key = _ref19.api_key,
+      proxy = _ref19.proxy
 
     classCallCheck(this, Tumblr)
 
@@ -480,43 +604,39 @@ var Tumblr = (function() {
   createClass(Tumblr, [
     {
       key: 'blog',
-      value: function blog(account) {
-        return _blog({
-          api_key: this.api_key,
-          proxy: this.proxy,
-          account: account
-        })
+      value: function blog(name) {
+        return _blog({ api_key: this.api_key, proxy: this.proxy, name: name })
       }
     },
     {
       key: 'posts',
-      value: function posts(account, params) {
+      value: function posts(name, params) {
         return _posts({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           params: params
         })
       }
     },
     {
       key: 'total',
-      value: function total(account, params) {
+      value: function total(name, params) {
         return _total({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           params: params
         })
       }
     },
     {
       key: 'post',
-      value: function post(account, id, params) {
+      value: function post(name, id, params) {
         return _post({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           id: id,
           params: params
         })
@@ -525,19 +645,19 @@ var Tumblr = (function() {
     {
       key: 'samplingPosts',
       value: function samplingPosts() {
-        var _ref18 =
+        var _ref20 =
             arguments.length > 0 && arguments[0] !== undefined
               ? arguments[0]
               : {},
-          account = _ref18.account,
-          params = _ref18.params,
-          denom = _ref18.denom,
-          maxLimit = _ref18.maxLimit
+          name = _ref20.name,
+          params = _ref20.params,
+          denom = _ref20.denom,
+          maxLimit = _ref20.maxLimit
 
         return _samplingPosts({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           params: params,
           denom: denom,
           maxLimit: maxLimit
@@ -547,20 +667,20 @@ var Tumblr = (function() {
     {
       key: 'samplingTags',
       value: function samplingTags() {
-        var _ref19 =
+        var _ref21 =
             arguments.length > 0 && arguments[0] !== undefined
               ? arguments[0]
               : {},
-          account = _ref19.account,
-          params = _ref19.params,
-          denom = _ref19.denom,
-          maxLimit = _ref19.maxLimit,
-          proxy = _ref19.proxy
+          name = _ref21.name,
+          params = _ref21.params,
+          denom = _ref21.denom,
+          maxLimit = _ref21.maxLimit,
+          proxy = _ref21.proxy
 
         return _samplingTags({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           params: params,
           denom: denom,
           maxLimit: maxLimit
@@ -570,18 +690,18 @@ var Tumblr = (function() {
     {
       key: 'generatePosts',
       value: function generatePosts() {
-        var _ref20 =
+        var _ref22 =
             arguments.length > 0 && arguments[0] !== undefined
               ? arguments[0]
               : {},
-          account = _ref20.account,
-          params = _ref20.params,
-          random = _ref20.random
+          name = _ref22.name,
+          params = _ref22.params,
+          random = _ref22.random
 
         return _generatePosts({
           api_key: this.api_key,
           proxy: this.proxy,
-          account: account,
+          name: name,
           params: params,
           random: random
         })

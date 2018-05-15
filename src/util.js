@@ -1,7 +1,7 @@
 export const SAMPLING_DENOM = 4
 export const SAMPLING_MAX_NUM = 3
 
-export const identifier = account => `${account}.tumblr.com`
+export const identifier = name => `${name}.tumblr.com`
 
 export const throws = (message) => { throw new Error(message) }
 

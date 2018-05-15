@@ -4,7 +4,7 @@ import { outputJson } from 'fs-extra'
 import { join } from 'path'
 
 export const outpath = (type) => join(__dirname, `snap.${type}.json`)
-export const account = 'kthjm'
+export const name = 'kthjm'
 export const spaces = '  '
 
 export const extractZero = ([zero]) => zero
@@ -31,7 +31,7 @@ const createV2 = async () => {
 
   const tumblr = new v2.Tumblr({ api_key: process.env.CONSUMER_KEY })
 
-  const fetchPostByType = (type) => tumblr.posts(account, { limit: 1, type }).then(extractZero)
+  const fetchPostByType = (type) => tumblr.posts(name, { limit: 1, type }).then(extractZero)
 
   const quote = await fetchPostByType('quote')
   const text = await fetchPostByType('text')
@@ -63,7 +63,7 @@ const createV2 = async () => {
   const extractExclude = HoExtractExclude(({ type }) => Object.keys(map[type]))
 
   const fetchPostWithExcludes = (key, extractExclude) =>
-    tumblr.posts(account, { limit: 1, [key]: true })
+    tumblr.posts(name, { limit: 1, [key]: true })
     .then(extractZero)
     .then(extractExclude)
 
@@ -82,7 +82,7 @@ const createV2 = async () => {
     return delete post[key]
   }))
 
-  const blog = await tumblr.blog(account)
+  const blog = await tumblr.blog(name)
 
   return { blog, post: { quote, text, chat, photo, link, video, audio, answer, common, reblog_info, notes_info } }
 }
@@ -90,7 +90,7 @@ const createV2 = async () => {
 const createV1 = async () => {
 
   const postByType = (type) =>
-    v1.posts(account, { num: 1, type })
+    v1.posts(name, { num: 1, type })
     .then(extractZero)
 
   const quote = await postByType('quote')
@@ -116,7 +116,7 @@ const createV1 = async () => {
     })
   )
 
-  const blog = await v1.blog(account)
+  const blog = await v1.blog(name)
 
   return { blog, post: { quote, 'text/regular': text, 'chat/conversation': chat, photo, link, video, audio, common, reblog_info } }
 }

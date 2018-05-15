@@ -29,10 +29,10 @@ const tumblr = new Tumblr({ api_key, proxy })
 ### `new Tumblr({ api_key, proxy })`
 Required at least one either.
 
-#### `.blog(account)`
+#### `.blog(name)`
 result: `Promise<Blog>`
 
-#### `.posts(account[, params])`
+#### `.posts(name[, params])`
 result: `Promise<Post[]>`
 ##### params
 - `type`
@@ -44,13 +44,13 @@ result: `Promise<Post[]>`
 - `notes_info`
 - `filter`
 
-#### `.total(account[, params])`
+#### `.total(name[, params])`
 result: `Promise<number>`
 ##### params
 - `type`
 - `tag`
 
-#### `.post(account, id[, params])`
+#### `.post(name, id[, params])`
 result: `Promise<Post>`
 ##### params
 - `reblog_info`
@@ -59,20 +59,20 @@ result: `Promise<Post>`
 #### `.samplingPosts(options)` / `.samplingTags(options)`
 result: `Promise<Post[]>` / `Promise<Tag[]>`
 ##### options
-- `account`
+- `name`
 - `denom`
 - `maxLimit`
 - `params`
 
 #### `.generatePosts(options)`
 ```js
-const supply = await tumblr.generatePosts({ account })
+const supply = await tumblr.generatePosts({ name })
 const { done, value: posts } = await supply()
 const { done, value: posts } = await supply()
 ```
 result: `Promise<SupplyFn>` ([`tiloop`](https://github.com/kthjm/tiloop)'s)
 ##### options
-- `account`
+- `name`
 - `random`
 - `params`
 
@@ -81,32 +81,32 @@ result: `Promise<SupplyFn>` ([`tiloop`](https://github.com/kthjm/tiloop)'s)
 ```js
 import * as v2 from 'tumblrinbrowser'
 
-const url = v2.avatar(account[, size])
+const url = v2.avatar(name[, size])
 
-const blog = await v2.blog({ api_key, proxy, account })
-const posts = await v2.posts({ api_key, proxy, account, params })
-const total = await v2.total({ api_key, proxy, account, params })
-const post = await v2.post({ api_key, proxy, account, id, params })
+const blog = await v2.blog({ api_key, proxy, name })
+const posts = await v2.posts({ api_key, proxy, name, params })
+const total = await v2.total({ api_key, proxy, name, params })
+const post = await v2.post({ api_key, proxy, name, id, params })
 
-const posts = await v2.samplingPosts({ api_key, proxy, account, denom, maxLimit, params })
-const tags = await v2.samplingTags({ api_key, proxy, account, denom, maxLimit, params })
+const posts = await v2.samplingPosts({ api_key, proxy, name, denom, maxLimit, params })
+const tags = await v2.samplingTags({ api_key, proxy, name, denom, maxLimit, params })
 
-const supply = await v2.generatePosts({ api_key, proxy, account, random, params })
+const supply = await v2.generatePosts({ api_key, proxy, name, random, params })
 ```
 
 ## v1
 ```js
 import * as v1 from 'tumblrinbrowser/v1'
 
-const blog = await v1.blog(account[, timeout])
-const posts = await v1.posts(account[, params, timeout])
-const total = await v1.total(account[, params, timeout])
-const post = await v1.post(account, id[, params, timeout])
+const blog = await v1.blog(name[, timeout])
+const posts = await v1.posts(name[, params, timeout])
+const total = await v1.total(name[, params, timeout])
+const post = await v1.post(name, id[, params, timeout])
 
-const posts = await v1.samplingPosts({ account, params, denom, maxLimit, timeout })
-const tags = await v1.samplingTags({ account, params, denom, maxLimit, timeout })
+const posts = await v1.samplingPosts({ name, params, denom, maxLimit, timeout })
+const tags = await v1.samplingTags({ name, params, denom, maxLimit, timeout })
 
-const supply = await v1.generatePosts({ account, params, random, timeout })
+const supply = await v1.generatePosts({ name, params, random, timeout })
 ```
 
 ## License

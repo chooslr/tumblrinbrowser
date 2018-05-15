@@ -4,14 +4,14 @@ import * as v2 from '../rewired.v2.js'
 import * as v1 from '../rewired.v1.js'
 
 const { CONSUMER_KEY: api_key } = process.env
-const account = 'ttttthhhhhhheemeeeee' // few posts account
+const name = 'ttttthhhhhhheemeeeee' // few posts name
 
 describe('generatePosts({ offset/start, type })', () => {
   const offset = 10
   const type = 'photo'
 
   const test = (feedPromise) => async () => {
-    const total = await v1.total(account, { type })
+    const total = await v1.total(name, { type })
 
     const feedPosts = await feedPromise
     const posts_all = await recursiveAddPostTillDone(feedPosts)
@@ -21,13 +21,13 @@ describe('generatePosts({ offset/start, type })', () => {
   }
 
   it('v2.generatePosts',
-    test(v2.generatePosts({ api_key, account, params: { offset, type } })))
+    test(v2.generatePosts({ api_key, name, params: { offset, type } })))
   it('v2.generatePosts (random)',
-    test(v2.generatePosts({ api_key, account, params: { offset, type }, random: true })))
+    test(v2.generatePosts({ api_key, name, params: { offset, type }, random: true })))
   it('v1.generatePosts',
-    test(v1.generatePosts({ account, params: { start: offset, type } })))
+    test(v1.generatePosts({ name, params: { start: offset, type } })))
   it('v1.generatePosts (random)',
-    test(v1.generatePosts({ account, params: { start: offset, type }, random: true })))
+    test(v1.generatePosts({ name, params: { start: offset, type }, random: true })))
 })
 
 describe('generatePosts => throws', () => {
@@ -36,7 +36,7 @@ describe('generatePosts => throws', () => {
     const num = 51
 
     const test = (Ho, params) => () =>
-      Ho({ api_key, account, params })
+      Ho({ api_key, name, params })
       .then(() => assert(false))
       .catch(() => assert(true))
 
@@ -46,14 +46,14 @@ describe('generatePosts => throws', () => {
 
   describe('{ offset/start: total }', () => {
     const test = (HofeedPromise) => () =>
-      v1.total(account)
+      v1.total(name)
       .then(total => HofeedPromise(total))
       .then(() => assert(false))
       .catch(() => assert(true))
 
     it('v2.generatePosts',
-      test((total) => v2.generatePosts({ api_key, account, params: { offset: total } })))
+      test((total) => v2.generatePosts({ api_key, name, params: { offset: total } })))
     it('v1.generatePosts',
-      test((total) => v1.generatePosts({ account, params: { start: total } })))
+      test((total) => v1.generatePosts({ name, params: { start: total } })))
   })
 })
