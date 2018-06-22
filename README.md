@@ -1,23 +1,27 @@
 # tumblrinbrowser
 
-[![npm](https://img.shields.io/npm/v/tumblrinbrowser.svg?style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
-[![npm](https://img.shields.io/npm/dm/tumblrinbrowser.svg?style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
-[![Build Status](https://img.shields.io/travis/kthjm/tumblrinbrowser.svg?style=flat-square)](https://travis-ci.org/kthjm/tumblrinbrowser)
-[![Coverage Status](https://img.shields.io/codecov/c/github/kthjm/tumblrinbrowser.svg?style=flat-square)](https://codecov.io/github/kthjm/tumblrinbrowser)
+[![npm](https://img.shields.io/npm/v/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
+[![npm](https://img.shields.io/npm/dm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
+[![Build Status](https://img.shields.io/travis/kthjm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://travis-ci.org/kthjm/tumblrinbrowser)
+[![Coverage Status](https://img.shields.io/codecov/c/github/kthjm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://codecov.io/github/kthjm/tumblrinbrowser)
 
 > [tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
 >
 > Due to CORS restrictions, you're going to have a really hard time using this library in the browser. Although GET endpoints on the Tumblr API support JSONP, this library is not intended for in-browser use. Sorry!
 
-The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser.
+The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser. (splited from [**chooslr**](https://chooslr.com/) that is tumblr client app)
 
+## Installation
+
+### cdn
 - [`window.tumblrV2`](https://cdn.jsdelivr.net/npm/tumblrinbrowser/v2/min.js)
 - [`window.tumblrV1`](https://cdn.jsdelivr.net/npm/tumblrinbrowser/v1/min.js)
 
-## Installation
+### npm
 ```shell
 yarn add tumblrinbrowser
 ```
+
 
 ## v2
 ```js
