@@ -2,14 +2,14 @@
 
 [![npm](https://img.shields.io/npm/v/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
 [![npm](https://img.shields.io/npm/dm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://www.npmjs.com/package/tumblrinbrowser)
-[![Build Status](https://img.shields.io/travis/kthjm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://travis-ci.org/kthjm/tumblrinbrowser)
-[![Coverage Status](https://img.shields.io/codecov/c/github/kthjm/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://codecov.io/github/kthjm/tumblrinbrowser)
+[![Build Status](https://img.shields.io/travis/chooslr/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://travis-ci.org/chooslr/tumblrinbrowser)
+[![Coverage Status](https://img.shields.io/codecov/c/github/chooslr/tumblrinbrowser.svg?longCache=true&style=flat-square)](https://codecov.io/github/chooslr/tumblrinbrowser)
 
-> [tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
->
 > Due to CORS restrictions, you're going to have a really hard time using this library in the browser. Although GET endpoints on the Tumblr API support JSONP, this library is not intended for in-browser use. Sorry!
+>
+> [tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
 
-The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser. (splited from [**chooslr**](https://chooslr.com/) that is tumblr client app)
+The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser. (splited from [`chooslr/api`](https://github.com/chooslr/api))
 
 ## Installation
 

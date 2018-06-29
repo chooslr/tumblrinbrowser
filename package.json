@@ -1,8 +1,8 @@
 {
   "name": "tumblrinbrowser",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "kthjm <toxictoxer@gmail.com>",
-  "repository": "kthjm/tumblrinbrowser",
+  "repository": "chooslr/tumblrinbrowser",
   "license": "MIT",
   "main": "v2/cjs.js",
   "module": "v2/es.js",
