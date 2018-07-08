@@ -9,7 +9,7 @@
 >
 > [tumblr/tumblr.js](https://github.com/tumblr/tumblr.js/)
 
-The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser. (splitted from [chooslr/api](https://github.com/chooslr/api))
+The unofficial JavaScript client library for both Tumblr API [v2](http://www.tumblr.com/docs/api/v2) and [v1](https://www.tumblr.com/docs/en/api/v1) intended for use in browser. (splitted from [chooslr/chooslr-api](https://github.com/chooslr/chooslr-api))
 
 ## Installation
 
