@@ -468,7 +468,7 @@ var generateSearch = (function() {
         word = _ref14.word,
         timeout = _ref14.timeout
 
-      var page1Posts, page2Posts, pageIterator, handledPosts
+      var tempPosts, pageIterator
       return regeneratorRuntime.wrap(
         function _callee3$(_context3) {
           while (1) {
@@ -478,49 +478,35 @@ var generateSearch = (function() {
                 return search(name, word, 1, timeout)
 
               case 2:
-                page1Posts = _context3.sent
+                tempPosts = _context3.sent
 
-                asserts(page1Posts.length !== 0, 'not found')
+                asserts(tempPosts.length !== 0, 'not found')
 
-                _context3.next = 6
-                return search(name, word, 2, timeout)
-
-              case 6:
-                page2Posts = _context3.sent
                 pageIterator = pageGenerator()
-                handledPosts = void 0
                 return _context3.abrupt('return', function() {
-                  return Promise.resolve().then(function() {
-                    var _pageIterator$next = pageIterator.next(),
-                      page = _pageIterator$next.value,
-                      done = _pageIterator$next.done
+                  var _pageIterator$next = pageIterator.next(),
+                    page = _pageIterator$next.value,
+                    done = _pageIterator$next.done
 
-                    if (page === 1) {
-                      pageIterator.next(page1Posts.length !== page2Posts.length)
-                      var value = page1Posts
-                      handledPosts = page2Posts.length ? page2Posts : []
-                      return { value: value, done: done }
-                    } else if (!done) {
-                      return search(name, word, page + 1, timeout).then(
-                        function(posts) {
-                          pageIterator.next(
-                            posts.length === 0 ||
-                              posts.length !== handledPosts.length
-                          )
-                          var value = handledPosts
-                          handledPosts = posts
-                          return { value: value, done: done }
-                        }
-                      )
-                    } else {
-                      var _value = handledPosts
-                      if (handledPosts.length) handledPosts = []
-                      return { value: _value, done: done }
-                    }
+                  if (done) {
+                    var value = tempPosts
+                    if (tempPosts.length) tempPosts = []
+                    return Promise.resolve({ value: value, done: done })
+                  }
+
+                  return search(name, word, page + 1, timeout).then(function(
+                    posts
+                  ) {
+                    pageIterator.next(
+                      !posts.length || posts.length !== tempPosts.length
+                    )
+                    var value = tempPosts
+                    tempPosts = posts
+                    return { value: value, done: done }
                   })
                 })
 
-              case 10:
+              case 6:
               case 'end':
                 return _context3.stop()
             }
