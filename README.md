@@ -105,12 +105,16 @@ const blog = await v1.blog(name[, timeout])
 const posts = await v1.posts(name[, params, timeout])
 const total = await v1.total(name[, params, timeout])
 const post = await v1.post(name, id[, params, timeout])
+const posts = await v1.search(name, word[, page, timeout])
 
 const posts = await v1.samplingPosts({ name, params, denom, maxLimit, timeout })
 const tags = await v1.samplingTags({ name, params, denom, maxLimit, timeout })
 
 const supply = await v1.generatePosts({ name, params, random, timeout })
+const supply = await v1.generateSearch({ name, word, timeout })
 ```
+
+- [“Always serve blog over SSL.”](https://security.tumblr.com/post/166219476810/support-support-ssl-security-which-has-been)
 
 ## License
 MIT (http://opensource.org/licenses/MIT)
