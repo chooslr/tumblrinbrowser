@@ -11,14 +11,9 @@ import {
   postsToTags
 } from './util.js'
 
-const PAGE_URL = (name) =>
-	`https://${identifier(name)}`
-
-const API_URL = (name) =>
-	`${PAGE_URL(name)}/api/read/json`
-	
-const SEARCH_URL = (name, word) =>
-	`${PAGE_URL(name)}/search/${word}`
+const PAGE_URL = (name) => `https://${identifier(name)}`
+const API_URL = (name) => `${PAGE_URL(name)}/api/read/json`
+const SEARCH_URL = (name, word) => `${PAGE_URL(name)}/search/${word}`
 	
 const MAX_LIMIT = 50
 const TIMEOUT = 5000
