@@ -11,12 +11,16 @@ import {
   postsToTags
 } from './util.js'
 
-const API_URL = name => `https://${identifier(name)}/api/read/json`
+const PAGE_URL = (name) => `https://${identifier(name)}`
+const API_URL = (name) => `${PAGE_URL(name)}/api/read/json`
+const SEARCH_URL = (name, word) => `${PAGE_URL(name)}/search/${word}`
+
 const MAX_LIMIT = 50
+const TIMEOUT = 5000
 
 export const postTypes = ['quote', 'text', 'chat', 'photo', 'link', 'video', 'audio']
 
-const jsonpInterface = (name, params, timeout = 5000) => {
+const jsonpInterface = (name, params, timeout = TIMEOUT) => {
   asserts(typeof name === 'string', 'required name')
   const { start, num, type, tag, id, filter } = params || {}
   return jsonp(
@@ -43,6 +47,16 @@ export const post = (name, id, timeout) => {
   asserts(typeof id === 'string' || typeof id === 'number', 'required id')
   return jsonpInterface(name, { id }, timeout)
   .then(({ posts }) => posts[0])
+}
+
+export const search = (name, word, page, timeout = TIMEOUT) => {
+  asserts(word && typeof word === 'string', 'required word')
+  page = (typeof page === 'number' && page > 0) ? page : 1
+  return jsonp(
+    SEARCH_URL(name, word) + joinParams({ format: 'json', page }),
+    timeout
+  )
+  .then(({ posts }) => posts)
 }
 
 
@@ -111,4 +125,44 @@ export const generatePosts = async ({ name, random, params, timeout } = {}) => {
         timeout
       )
   })
+}
+
+export const generateSearch = async ({ name, word, timeout } = {}) => {
+
+  let tempPosts = await search(name, word, 1, timeout)
+  asserts(tempPosts.length > 0, 'not found')
+
+  const pageIterator = pageGenerator()
+
+  return () => {
+
+    const { value: page, done } = pageIterator.next()
+
+    if (done) {
+      const value = tempPosts
+      if (tempPosts.length) tempPosts = []
+      return Promise.resolve({ value, done })
+    }
+
+    return search(name, word, page + 1, timeout).then(posts => {
+      pageIterator.next(!posts.length || posts.length !== tempPosts.length)
+      const value = tempPosts
+      tempPosts = posts
+      return { value, done }
+    })
+  }
+}
+
+function* pageGenerator () {
+  let page = 1
+  let isReturn
+  while (true) {
+    if (!isReturn) {
+      isReturn = yield page
+      yield
+    } else {
+      return page
+    }
+    page++
+  }
 }

@@ -186,16 +186,26 @@ var postsToTags = function postsToTags(posts) {
 
 var _this = undefined
 
-var API_URL = function API_URL(name) {
-  return 'https://' + identifier(name) + '/api/read/json'
+var _marked = /*#__PURE__*/ regeneratorRuntime.mark(pageGenerator)
+
+var PAGE_URL = function PAGE_URL(name) {
+  return 'https://' + identifier(name)
 }
+var API_URL = function API_URL(name) {
+  return PAGE_URL(name) + '/api/read/json'
+}
+var SEARCH_URL = function SEARCH_URL(name, word) {
+  return PAGE_URL(name) + '/search/' + word
+}
+
 var MAX_LIMIT = 50
+var TIMEOUT = 5000
 
 var postTypes = ['quote', 'text', 'chat', 'photo', 'link', 'video', 'audio']
 
 var jsonpInterface = function jsonpInterface(name, params) {
   var timeout =
-    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5000
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : TIMEOUT
 
   asserts(typeof name === 'string', 'required name')
 
@@ -255,24 +265,39 @@ var post = function post(name, id, timeout) {
   })
 }
 
+var search = function search(name, word, page) {
+  var timeout =
+    arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : TIMEOUT
+
+  asserts(word && typeof word === 'string', 'required word')
+  page = typeof page === 'number' && page > 0 ? page : 1
+  return jsonp(
+    SEARCH_URL(name, word) + joinParams({ format: 'json', page: page }),
+    timeout
+  ).then(function(_ref6) {
+    var posts = _ref6.posts
+    return posts
+  })
+}
+
 var samplingTags = function samplingTags() {
   return samplingPosts.apply(undefined, arguments).then(postsToTags)
 }
 
 var samplingPosts = (function() {
-  var _ref6 = asyncToGenerator(
+  var _ref7 = asyncToGenerator(
     /*#__PURE__*/ regeneratorRuntime.mark(function _callee() {
-      var _ref7 =
+      var _ref8 =
           arguments.length > 0 && arguments[0] !== undefined
             ? arguments[0]
             : {},
-        name = _ref7.name,
-        params = _ref7.params,
-        denom = _ref7.denom,
-        maxLimit = _ref7.maxLimit,
-        timeout = _ref7.timeout
+        name = _ref8.name,
+        params = _ref8.params,
+        denom = _ref8.denom,
+        maxLimit = _ref8.maxLimit,
+        timeout = _ref8.timeout
 
-      var _ref8, type, tag, filter, length, maxIncrement
+      var _ref9, type, tag, filter, length, maxIncrement
 
       return regeneratorRuntime.wrap(
         function _callee$(_context) {
@@ -283,10 +308,10 @@ var samplingPosts = (function() {
                 maxLimit = maxLimit || SAMPLING_MAX_NUM
                 asserts(maxLimit <= MAX_LIMIT, 'invalid maxLimit')
 
-                ;(_ref8 = params || {}),
-                  (type = _ref8.type),
-                  (tag = _ref8.tag),
-                  (filter = _ref8.filter)
+                ;(_ref9 = params || {}),
+                  (type = _ref9.type),
+                  (tag = _ref9.tag),
+                  (filter = _ref9.filter)
                 _context.next = 6
                 return total(name, { type: type, tag: tag })
 
@@ -340,26 +365,26 @@ var samplingPosts = (function() {
   )
 
   return function samplingPosts() {
-    return _ref6.apply(this, arguments)
+    return _ref7.apply(this, arguments)
   }
 })()
 
 var generatePosts = (function() {
-  var _ref9 = asyncToGenerator(
+  var _ref10 = asyncToGenerator(
     /*#__PURE__*/ regeneratorRuntime.mark(function _callee2() {
-      var _ref10 =
+      var _ref11 =
           arguments.length > 0 && arguments[0] !== undefined
             ? arguments[0]
             : {},
-        name = _ref10.name,
-        random = _ref10.random,
-        params = _ref10.params,
-        timeout = _ref10.timeout
+        name = _ref11.name,
+        random = _ref11.random,
+        params = _ref11.params,
+        timeout = _ref11.timeout
 
-      var _ref11,
-        _ref11$start,
+      var _ref12,
+        _ref12$start,
         start,
-        _ref11$num,
+        _ref12$num,
         num,
         type,
         tag,
@@ -371,14 +396,14 @@ var generatePosts = (function() {
           while (1) {
             switch ((_context2.prev = _context2.next)) {
               case 0:
-                ;(_ref11 = params || {}),
-                  (_ref11$start = _ref11.start),
-                  (start = _ref11$start === undefined ? 0 : _ref11$start),
-                  (_ref11$num = _ref11.num),
-                  (num = _ref11$num === undefined ? 20 : _ref11$num),
-                  (type = _ref11.type),
-                  (tag = _ref11.tag),
-                  (filter = _ref11.filter)
+                ;(_ref12 = params || {}),
+                  (_ref12$start = _ref12.start),
+                  (start = _ref12$start === undefined ? 0 : _ref12$start),
+                  (_ref12$num = _ref12.num),
+                  (num = _ref12$num === undefined ? 20 : _ref12$num),
+                  (type = _ref12.type),
+                  (tag = _ref12.tag),
+                  (filter = _ref12.filter)
 
                 asserts(num <= MAX_LIMIT, 'invalid num')
 
@@ -426,15 +451,130 @@ var generatePosts = (function() {
   )
 
   return function generatePosts() {
-    return _ref9.apply(this, arguments)
+    return _ref10.apply(this, arguments)
   }
 })()
+
+var generateSearch = (function() {
+  var _ref13 = asyncToGenerator(
+    /*#__PURE__*/ regeneratorRuntime.mark(function _callee3() {
+      var _ref14 =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : {},
+        name = _ref14.name,
+        word = _ref14.word,
+        timeout = _ref14.timeout
+
+      var tempPosts, pageIterator
+      return regeneratorRuntime.wrap(
+        function _callee3$(_context3) {
+          while (1) {
+            switch ((_context3.prev = _context3.next)) {
+              case 0:
+                _context3.next = 2
+                return search(name, word, 1, timeout)
+
+              case 2:
+                tempPosts = _context3.sent
+
+                asserts(tempPosts.length > 0, 'not found')
+
+                pageIterator = pageGenerator()
+                return _context3.abrupt('return', function() {
+                  var _pageIterator$next = pageIterator.next(),
+                    page = _pageIterator$next.value,
+                    done = _pageIterator$next.done
+
+                  if (done) {
+                    var value = tempPosts
+                    if (tempPosts.length) tempPosts = []
+                    return Promise.resolve({ value: value, done: done })
+                  }
+
+                  return search(name, word, page + 1, timeout).then(function(
+                    posts
+                  ) {
+                    pageIterator.next(
+                      !posts.length || posts.length !== tempPosts.length
+                    )
+                    var value = tempPosts
+                    tempPosts = posts
+                    return { value: value, done: done }
+                  })
+                })
+
+              case 6:
+              case 'end':
+                return _context3.stop()
+            }
+          }
+        },
+        _callee3,
+        _this
+      )
+    })
+  )
+
+  return function generateSearch() {
+    return _ref13.apply(this, arguments)
+  }
+})()
+
+function pageGenerator() {
+  var page, isReturn
+  return regeneratorRuntime.wrap(
+    function pageGenerator$(_context4) {
+      while (1) {
+        switch ((_context4.prev = _context4.next)) {
+          case 0:
+            page = 1
+            isReturn = void 0
+
+          case 2:
+            if (isReturn) {
+              _context4.next = 11
+              break
+            }
+
+            _context4.next = 6
+            return page
+
+          case 6:
+            isReturn = _context4.sent
+            _context4.next = 9
+            return
+
+          case 9:
+            _context4.next = 12
+            break
+
+          case 11:
+            return _context4.abrupt('return', page)
+
+          case 12:
+            page++
+            _context4.next = 2
+            break
+
+          case 15:
+          case 'end':
+            return _context4.stop()
+        }
+      }
+    },
+    _marked,
+    this
+  )
+}
 
 exports.postTypes = postTypes
 exports.blog = blog
 exports.posts = posts
 exports.total = total
 exports.post = post
+exports.search = search
 exports.samplingTags = samplingTags
 exports.samplingPosts = samplingPosts
 exports.generatePosts = generatePosts
+exports.generateSearch = generateSearch

@@ -29,13 +29,13 @@ import Tumblr from 'tumblrinbrowser'
 const tumblr = new Tumblr({ api_key, proxy })
 ```
 
-### `new Tumblr({ api_key, proxy })`
+### new Tumblr({ api_key, proxy })
 Required at least one either.
 
-#### `.blog(name)`
+#### .blog(name)
 result: `Promise<Blog>`
 
-#### `.posts(name[, params])`
+#### .posts(name[, params])
 result: `Promise<Post[]>`
 ##### params
 - `type`
@@ -47,19 +47,19 @@ result: `Promise<Post[]>`
 - `notes_info`
 - `filter`
 
-#### `.total(name[, params])`
+#### .total(name[, params])
 result: `Promise<number>`
 ##### params
 - `type`
 - `tag`
 
-#### `.post(name, id[, params])`
+#### .post(name, id[, params])
 result: `Promise<Post>`
 ##### params
 - `reblog_info`
 - `notes_info`
 
-#### `.samplingPosts(options)` / `.samplingTags(options)`
+#### .samplingPosts(options) / .samplingTags(options)
 result: `Promise<Post[]>` / `Promise<Tag[]>`
 ##### options
 - `name`
@@ -67,7 +67,7 @@ result: `Promise<Post[]>` / `Promise<Tag[]>`
 - `maxLimit`
 - `params`
 
-#### `.generatePosts(options)`
+#### .generatePosts(options)
 ```js
 const supply = await tumblr.generatePosts({ name })
 const { done, value: posts } = await supply()
@@ -105,12 +105,16 @@ const blog = await v1.blog(name[, timeout])
 const posts = await v1.posts(name[, params, timeout])
 const total = await v1.total(name[, params, timeout])
 const post = await v1.post(name, id[, params, timeout])
+const posts = await v1.search(name, word[, page, timeout])
 
 const posts = await v1.samplingPosts({ name, params, denom, maxLimit, timeout })
 const tags = await v1.samplingTags({ name, params, denom, maxLimit, timeout })
 
 const supply = await v1.generatePosts({ name, params, random, timeout })
+const supply = await v1.generateSearch({ name, word, timeout })
 ```
+
+- [Always serve blog over SSL.](https://security.tumblr.com/post/166219476810/support-support-ssl-security-which-has-been)
 
 ## License
 MIT (http://opensource.org/licenses/MIT)
