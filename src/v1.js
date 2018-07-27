@@ -14,7 +14,7 @@ import {
 const PAGE_URL = (name) => `https://${identifier(name)}`
 const API_URL = (name) => `${PAGE_URL(name)}/api/read/json`
 const SEARCH_URL = (name, word) => `${PAGE_URL(name)}/search/${word}`
-	
+
 const MAX_LIMIT = 50
 const TIMEOUT = 5000
 
@@ -50,7 +50,7 @@ export const post = (name, id, timeout) => {
 }
 
 export const search = (name, word, page, timeout = TIMEOUT) => {
-  asserts(typeof word === 'string', 'required word')
+  asserts(word && typeof word === 'string', 'required word')
   page = (typeof page === 'number' && page > 0) ? page : 1
   return jsonp(
     SEARCH_URL(name, word) + joinParams({ format: 'json', page }),
@@ -128,23 +128,22 @@ export const generatePosts = async ({ name, random, params, timeout } = {}) => {
 }
 
 export const generateSearch = async ({ name, word, timeout } = {}) => {
-  
+
   let tempPosts = await search(name, word, 1, timeout)
-  
-  asserts(tempPosts.length !== 0, 'not found')
-  
+  asserts(tempPosts.length > 0, 'not found')
+
   const pageIterator = pageGenerator()
-  
+
   return () => {
-    
+
     const { value: page, done } = pageIterator.next()
-    
+
     if (done) {
       const value = tempPosts
       if (tempPosts.length) tempPosts = []
       return Promise.resolve({ value, done })
     }
-    
+
     return search(name, word, page + 1, timeout).then(posts => {
       pageIterator.next(!posts.length || posts.length !== tempPosts.length)
       const value = tempPosts

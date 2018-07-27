@@ -183,11 +183,9 @@ var _marked = /*#__PURE__*/ regeneratorRuntime.mark(pageGenerator)
 var PAGE_URL = function PAGE_URL(name) {
   return 'https://' + identifier(name)
 }
-
 var API_URL = function API_URL(name) {
   return PAGE_URL(name) + '/api/read/json'
 }
-
 var SEARCH_URL = function SEARCH_URL(name, word) {
   return PAGE_URL(name) + '/search/' + word
 }
@@ -263,7 +261,7 @@ var search = function search(name, word, page) {
   var timeout =
     arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : TIMEOUT
 
-  asserts(typeof word === 'string', 'required word')
+  asserts(word && typeof word === 'string', 'required word')
   page = typeof page === 'number' && page > 0 ? page : 1
   return jsonp(
     SEARCH_URL(name, word) + joinParams({ format: 'json', page: page }),
@@ -472,7 +470,7 @@ var generateSearch = (function() {
               case 2:
                 tempPosts = _context3.sent
 
-                asserts(tempPosts.length !== 0, 'not found')
+                asserts(tempPosts.length > 0, 'not found')
 
                 pageIterator = pageGenerator()
                 return _context3.abrupt('return', function() {
